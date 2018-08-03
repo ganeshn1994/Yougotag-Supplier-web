@@ -1,0 +1,333 @@
+<app-navbar></app-navbar>
+
+
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Purchase Invoice (Inward)</div>
+<div class="Purchase">
+  <!-- <form [formGroup]="invoiceForm" novalidate> -->
+  <div class="row ">
+    <div class="col-lg-4 ">
+
+      <label style="color: black; margin-bottom: -9px;" class="md-required" for="order"></label>
+      <!-- <mat-form-field class="example-full-width"> -->
+      <input class="" [(ngModel)]="invoicenumber" style="width: 70%; height: 40px;" id="order" name="Invoice" placeholder="Invoice / PO Number" maxlength="128">
+      <!-- </mat-form-field> -->
+      <div class="md-errors-spacer"></div>
+
+      <!-- ngIf: orderValidation.length>0 -->
+    </div>
+    <div class="col-lg-4 ">
+      <div class="input-group" style="width: 80%;">
+        <input class="" [(ngModel)]="invoicedate" type="text" id="suppliedwhen">
+        <span class="input-group-addon egp-span-backcolor">
+          <i class="fa fa-calendar egp-font20"></i>
+        </span>
+      </div>
+      <!-- ngIf: suppliedValidation.length>0 -->
+    </div>
+    <div class="col-lg-4 ">
+
+      <label style="color: black; margin-bottom: -9px;" class="md-required" for="order"></label>
+      <input style="width: 70%; height: 40px;" placeholder="Ca/Cf"id="order" [(ngModel)]="cacfid" maxlength="128">
+      <div class="md-errors-spacer"></div>
+
+      <!-- ngIf: orderValidation.length>0 -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 ">
+
+      <label style="color: black; margin-bottom: -9px;" class="md-required" for="order"></label>
+      <input style="width: 70%; height: 40px;" placeholder="Drug Name" id="order" [(ngModel)]="drugname" maxlength="128" aria-invalid="true">
+      <div class="md-errors-spacer"></div>
+
+      <!-- ngIf: orderValidation.length>0 -->
+    </div>
+    <div class="col-lg-4 batch ">
+      <input flex="" type="search" id="input-0" [(ngModel)]="batchno">
+    </div>
+
+    <div class="col-sm-2 ">
+      <div class="egp-button-design">
+        <button type="submit" class="btn btn-primary" data-ng-click="" data-toggle="modal" data-target="#myModal">Inv.Drugs</button>
+        <button type="button" class="btn btn-danger" ng-click="clearPrimaryFieldsData()">Clear</button>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Purchase Invoice (Inward)</h2>
+      <div class="dataTable_wrapper">
+        <table class="table table-bordered">
+          <thead>
+            <tr class="egp-headerbold">
+              <th style="text-align: -webkit-right;">#</th>
+              <th>Drug Name</th>
+              <th>Qty Supplied</th>
+              <th>Qty Free </th>
+              <th>PTS (in Stock Unit)</th>
+              <th>PTR (in Stock Unit)</th>
+              <th style="text-align: -webkit-right;">MRP (in Stock Unit)</th>
+              <th style="text-align: right;">Packing</th>
+              <th style="text-align: -webkit-right;">Disc%</th>
+              <!-- <th style="text-align: center;" data-ng-if="invoiceDataObj.invoiceStatus==='A' || invoiceDataObj.invoiceStatus==='GD'">Payment</th> -->
+              <th>Scheme Amt</th>
+              <th>CGST%
+                <br> Addl.GST%
+                <br> Tax On
+                <br> Mfg/Mkt
+              </th>
+              <th></th>
+              <th></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ngIf: janitramListArr.length ==0 -->
+            <!-- ngRepeat: janitramDataObj in janitramListData track by $index -->
+            <th style="text-align: -webkit-right;" class="ng-binding">{{index}}</th>
+            <td hidden="true" class="ng-binding">2610</td>
+            <td class="ng-binding">{{drugname}}</td>
+            <td class="ng-binding">{{suppliedqty}}</td>
+            <td class="ng-binding">{{freeqty}}</td>
+            <td class="ng-binding">{{pricetostockist}}</td>
+            <td class="ng-binding">{{stocksalesrate}}</td>
+
+            <td class="ng-scope">{{stockmrp}}</td>
+
+            <td style="text-align: right;" class="ng-binding">{{packingqty}}</td>
+            <td style="text-align: right;" class="ng-binding">{{dispercent}}</td>
+            <td style="text-align: right;" class="ng-binding">{{stockscheme}}</td>
+            <td class="ng-binding">CGST ={{cgstpercent}}
+              <br> Addl.GST(igst) = {{addlgstpercent}}
+              <br> Tax On = {{taxmodal}}
+              <br> Mfg/Mkt = {{manufacturerMnemonic}}</td>
+            <th style="text-align: center;">
+              <a data-toggle="modal" data-target="#editStockModal" data-backdrop="static" data-keyboard="false" data-ng-click="fetchDetails($index)">
+                <abbr title="Edit" class="egp-border-bottom">
+                  <i class="fa fa-pencil-square-o egp-font24"></i>
+                </abbr>
+              </a>
+            </th>
+            <th style="text-align: center;">
+              <a ng-click="setDeleteDrugRecord($index)">
+                <abbr title="Delete" class="egp-border-bottom">
+                  <i class="fa fa-trash egp-font24"></i>
+                </abbr>
+              </a>
+            </th>
+
+          </tbody>
+        </table>
+        <div class="pull-right" style="padding-bottom: 10px">
+          <button type="button" class="btn btn-danger" ng-click="clearDrugList()">Clear</button>
+          <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Raise PO Modal-->
+<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Raise PO</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <label style="color: black; font-size: 15; font-weight: 400 !important;">Batch Number
+              </label>
+              <br>
+              <label style="color: #716e6e; max-width: 200px; word-wrap: break-word" class="ng-binding">{{batchno}}</label>
+            </div>
+            <div class="col-sm-3">
+              <label style="color: black; font-size: 15; font-weight: 400 !important;">PO Number</label>
+              <br>
+              <label style="color: #716e6e; max-width: 200px; word-wrap: break-word" class="ng-binding">{{invoicenumber}}</label>
+            </div>
+            <div class="col-sm-3">
+              <label style="color: black; font-size: 15; font-weight: 400 !important;">Drug</label>
+              <br>
+              <label style="color: #716e6e; max-width: 200px; word-wrap: break-word" class="ng-binding">{{drugname}}</label>
+            </div>
+            <div class="col-sm-3">
+              <label style="color: black; font-size: 15; font-weight: 400 !important;">Supplied When</label>
+              <br>
+              <label style="color: #716e6e;" class="ng-binding">{{invoicedate}}</label>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-sm-3" style="margin-top: -10;">
+              <!-- <label class="egp-color-black"></label> -->
+              <div class="input-group" style="width: 80%;">
+                <input placeholder="Exp. Date" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" type="text" ngtrim="true" data-provide="datepicker"
+                  id="expiry" [(ngModel)]="expiry" data-date-start-date="0d" required="" aria-invalid="true">
+                <span class="input-group-addon egp-span-backcolor">
+                  <i class="fa fa-calendar egp-font20"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <!-- <label class="egp-color-black md-required" for="suppliedqty"></label> -->
+              <input ngtrim="true" id="suppliedqty" placeholder="Qty Supplied" min="0" [(ngModel)]="suppliedqty" maxlength="6">
+              <div class="md-errors-spacer"></div>
+            </div>
+            <div class="col-sm-2">
+              <!-- <label class="egp-color-black" for="freeqty">Free Qty</label> -->
+              <input ngtrim="true" id="freeqty" [(ngModel)]="freeqty" placeholder="Free Qty" maxlength="6" onkeypress="return isNumberKey(event)" class="ng-pristine ng-untouched ng-valid md-input ng-valid-maxlength"
+                aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+            </div>
+            <div class="col-sm-2">
+              <!-- <label class="egp-color-black md-required" for="packingqty"></label> -->
+              <input ngtrim="true" id="packingqty" placeholder="Packing Qty" [(ngModel)]="packingqty" maxlength="6">
+              <div class="md-errors-spacer"></div>
+              <!-- ngIf: packingValidation.length>0 -->
+              <small class="egp-errorClass-color ng-binding ng-scope" ng-if="packingValidation.length>0">Value cannot be 0!</small>
+              <!-- end ngIf: packingValidation.length>0 -->
+            </div>
+            <div class="col-sm-3">
+              <!-- <label ng-click="delegateClick()">HSN</label> -->
+              <input ngtrim="true" id="hsn" [(ngModel)]="hsn" placeholder="HSN" data-ng-blur="updateHSN()" class="ng-pristine ng-valid md-input ng-touched"
+                aria-label="HSN" aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+
+              <label style="color:#FF0000;font-size:smaller;">The changed value will update for all the batches of this drug</label>
+            </div>
+
+          </div>
+          <div class="row">
+
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black md-required" for="stockistprice"></label> -->
+              <input ngtrim="true" step="0.001" id="stockistprice" [(ngModel)]="pricetostockist" maxlength="10" pattern="((\d+)((\.\d{1,5})?))$"
+                ng-change="newcompareRate()" placeholder="PTS (Sale Rate)" title="Accepts only decimal value!" onkeyup="zeroValidation(this)" required=""
+                class="ng-pristine md-input ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength ng-touched"
+                aria-invalid="true">
+              <div class="md-errors-spacer"></div>
+              <!-- ngIf: ptsValidation.length>0 -->
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black md-required" for="salesrate"></label> -->
+              <input ngtrim="true" step="0.001" id="salesrate" ng-change="newcompareRate()" [(ngModel)]="stocksalesrate" maxlength="10"
+                pattern="((\d+)((\.\d{1,5})?))$" placeholder="PTR (Retailer Rate)" title="Accepts only decimal value!" onkeyup="zeroValidation(this)" required=""
+                class="ng-pristine ng-untouched md-input ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength"
+                aria-invalid="true">
+              <div class="md-errors-spacer"></div>
+              <!-- ngIf: ptrValidation.length>0 -->
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black md-required" for="mrp"></label> -->
+              <input id="mrp" ngtrim="true" step="0.001" [(ngModel)]="stockmrp" ng-change="newcompareRate()" maxlength="10" pattern="((\d+)((\.\d{1,5})?))$"
+                title="Accepts only decimal value!" placeholder="MRP" onkeyup="zeroValidation(this)" required="" class="ng-pristine ng-untouched md-input ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength"
+                aria-invalid="true">
+              <div class="md-errors-spacer"></div>
+              <!-- ngIf: mrpValidation.length>0 -->
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black" for="dispercent"></label> -->
+              <input ngtrim="true" onkeyup="restrictTwoDecimal(this)" placeholder="Discount%" id="dispercent" [(ngModel)]="dispercent" min="0" max="100" data-ng-init="dispercent=0.00"
+                class="ng-pristine ng-untouched ng-valid md-input" aria-invalid="false">
+              <div class="md-errors-spacer">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black md-required" for="cgstpercent"></label> -->
+              <input id="cgstpercent" ngtrim="true" onkeyup="restrictTwoDecimal(this)" placeholder="CGST%" [(ngModel)]="cgstpercent" min="0" max="100" required=""
+                class="ng-pristine md-input ng-valid ng-valid-required ng-touched" aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+
+              <!-- ngIf: cgstValidation.length>0 -->
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black md-required" for="addlgstpercent"></label> -->
+              <input id="addlgstpercent" ngtrim="true" onkeyup="restrictTwoDecimal(this)" placeholder="Addl. GST%" [(ngModel)]="addlgstpercent" min="0" max="100"
+                required="" class="ng-pristine ng-untouched md-input ng-valid ng-valid-required" aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+              <!-- ngIf: addlGstValidation.length>0 -->
+
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black" for="stockscheme"></label> -->
+              <input ngtrim="true" onkeyup="restrictTwoDecimal(this)" id="stockscheme" placeholder="Scheme Amount" [(ngModel)]="stockscheme" maxlength="10" title="Accepts only decimal value!"
+                data-ng-init="stockscheme=0.00" class="ng-pristine ng-untouched ng-valid md-input ng-valid-maxlength" aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black md-required" for="schedule"></label> -->
+              <input maxlength="5" ngtrim="true" id="schedule" [(ngModel)]="schedule" placeholder="Schedule" required="" class="ng-pristine ng-untouched md-input ng-valid-maxlength ng-valid ng-valid-required"
+                aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black" for="rack"></label> -->
+              <br>
+              <input maxlength="6" id="rack" ngtrim="true" placeholder="Rack" [(ngModel)]="rack" data-ng-blur="updateRack()" class="ng-pristine ng-valid md-input ng-valid-maxlength ng-touched"
+                aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+            </div>
+            <div class="col-sm-3">
+              <!-- <label class="egp-color-black" for="shelf"></label> -->
+              <br>
+              <input maxlength="6" id="shelf" ngtrim="true" placeholder="Shelf" [(ngModel)]="shelf" data-ng-blur="updateShelf()" class="ng-pristine ng-untouched ng-valid md-input ng-valid-maxlength"
+                aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+            </div>
+            <div class="col-sm-3">
+
+              <!-- <label class="egp-color-black" for="manufacturerMnemonic"></label> -->
+              <br>
+              <input maxlength="6" id="manufacturerMnemonic" placeholder="Mfg/Mkt" ngtrim="true" data-ng-blur="updateMfgMktMnemonic()" [(ngModel)]="manufacturerMnemonic"
+                class="ng-pristine ng-untouched ng-valid md-input ng-valid-maxlength" aria-invalid="false">
+              <div class="md-errors-spacer"></div>
+
+            </div>
+            <div class="col-sm-3">
+              <label class="egp-color-black">Tax On</label>
+              <br>
+
+              <select id="taxmodal" name="taxmodal" [(ngModel)]="taxmodal" ng-init="taxmodal ='SE'" required="" class="ng-pristine ng-valid ng-valid-required ng-touched"
+                aria-invalid="false">
+                <option value="">-Tax Calculated On-</option>
+                <option value="MI">MRP + Free</option>
+                <option value="ME">MRP - Free</option>
+                <option value="SI">Sale Rate + Free</option>
+                <option value="SE">Sale Rate - Free</option>
+              </select>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" (click)="onSubmit()" class="btn btn-default" data-dismiss="modal">Add to list</button>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

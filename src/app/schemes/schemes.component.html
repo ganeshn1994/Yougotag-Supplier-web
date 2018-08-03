@@ -1,0 +1,54 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Setup &gt;&gt; Schemes</div>
+<div class="scheme">
+  <div class="row">
+      <div class="col-sm-10">
+              <div class="slinput" ng-init="" style="width:400px">
+                  <i class="fa fa-search left-icon"></i>
+                  <input placeholder="Search drug" ng-model="schemedrugname" id="schemedrugname" data-ng-keyup="autoDisplaySchemeList(schemedrugname)" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                  <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (schemedrugname.length > 0)}" ng-click="schemedrugname = '';clearSchemeDrug()" role="button" tabindex="0" class="fa fa-close right-icon"></i>
+                <div class="egp-errorClass-color ng-binding"></div>
+           </div>
+     </div>
+     <div class="col-sm-2">
+     
+            <button type="submit" class="btn btn-primary" data-toggle="modal" ng-click="addNewScheme()" data-backdrop="static" data-keyboard="false">
+                Add New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i>
+            </button>
+        
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Manage Schemes</h3>
+            <div class="dataTable_wrapper">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="egp-headerbold">
+                        <th style="text-align: -webkit-right;">#</th>
+                        <th>Drug Name</th>
+                        <th>Scheme</th>
+                        <th>Qty + Free</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- ngRepeat: schemeObj in schemeObjList track by $index --><tr data-ng-show="schemeObjList.length !=0" data-ng-repeat="schemeObj in schemeObjList track by $index" class="egp-word-wrap egp-black ng-scope" aria-hidden="false">
+                        <td style="text-align: -webkit-right;" class="ng-binding">1</td>
+                        <td class="ng-binding">AUGUMED 625 TAB</td>
+                        <td class="ng-binding">10+1</td>
+                        <td class="ng-binding">10 + 1</td>
+                        <td class="ng-binding"></td>
+                        <!-- ngIf: schemeObj.activeOrNot === 'A' --><td data-ng-if="schemeObj.activeOrNot === 'A'" class="ng-scope">Active</td><!-- end ngIf: schemeObj.activeOrNot === 'A' -->
+                        <!-- ngIf: schemeObj.activeOrNot === 'I' -->
+                        <td style="text-align: center;"><a data-toggle="modal" data-backdrop="static" data-keyboard="false" data-ng-click="editScheme(schemeObj)"><abbr title="Edit" class="egp-border-bottom"><i class="fa fa-pencil-square-o egp-font24"></i></abbr></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+              
+            </div>

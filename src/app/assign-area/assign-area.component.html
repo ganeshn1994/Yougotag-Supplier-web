@@ -1,0 +1,82 @@
+<app-navbar></app-navbar>
+  <div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Setup &gt;&gt; Assign Areas</div>
+  <div class="area">
+      <div class="row">
+          <div class="col-sm-2">
+
+               <select name="fieldAgentForArea" data-ng-model="fieldAgentForArea" data-ng-init="fieldAgentForArea =''" id="fieldAgentForArea" style="width: 140%;" required="required" class="ng-pristine ng-invalid ng-invalid-required ng-touched" aria-invalid="true">
+                <option value="">--Select Agent--</option>
+                
+              </select>
+            
+            <!-- ngIf: fieldagentunselectederror.length > 0 -->
+          </div>
+          <div class="col-sm-1">
+            <a data-toggle="modal" data-ng-click="getviewAsignAreas(fieldAgentForArea)" style="float: right;margin-top: 11px"><i class="fa fa-tasks egp-font24"></i></a>
+          </div>
+          <div class="col-sm-1">
+        </div>
+          <div class="col-sm-2">
+            
+              <select name="state" data-ng-model="state" data-ng-init="state =''" id="state" data-ng-change="getCityAsPerState(state)" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                <option value="">--Select State--</option>
+                <option value="KA">Karnataka</option>
+              </select> 
+           
+          </div>
+          <div class="col-sm-2">
+            
+              <select name="city" data-ng-model="city" data-ng-init="city =''" id="city" data-ng-change="getAreaAsPerCity(city)" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                <option value="">--Select City--</option>
+                <!-- ngRepeat: city in cityListData track by $index -->
+              </select> 
+            
+          </div>
+          <div class="col-sm-2">
+            
+             <select name="areaList" data-ng-model="areaList" data-ng-init="areaList =''" id="areaList" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+              <option value="">--Select Area--</option>
+              <!-- ngRepeat: areaList in areaListData track by $index -->
+            </select><br> 
+          </div>
+          <div class="col-sm-2" style="margin-top: 4px;">
+            <button type="submit" class="btn btn-primary egp-button-width">Search</button>
+            <button type="reset" data-ng-click="clearSearchAreas()" class="btn btn-danger egp-button-width">Clear</button>
+          </div>
+        </div>
+  </div>
+
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Assign Areas</h3>
+            <div class="dataTable_wrapper">
+                <table class="table table-bordered" id="example">
+                  <thead>
+                    <tr class="egp-headerbold">
+                      <!-- ngIf: pharmacyListAsPerAreaListData.length!=0 -->
+                                  <!-- ngIf: pharmacyListAsPerAreaListData.length===0 --><th data-ng-if="pharmacyListAsPerAreaListData.length===0" class="ng-scope"></th><!-- end ngIf: pharmacyListAsPerAreaListData.length===0 -->
+                      <th>Pharmacy</th>
+                      <th>Address</th>
+                      <th>State</th>
+                      <th>City</th>
+                      <th>Area</th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- ngRepeat: pharmacyListAsPerAreaDataObj in pharmacyListAsPerAreaListData track by $index -->
+                    <tr data-ng-show="pharmacyListAsPerAreaListData.length===0" aria-hidden="false" class="">
+                          <td colspan="7" style="color: black;text-align: center;">
+                              No Pharmacy available.                
+                          </td>
+                      </tr>
+                  </tbody>
+                </table>
+                
+              </div>
+
+          </div>
+        </div>
+  </div>          
+ 

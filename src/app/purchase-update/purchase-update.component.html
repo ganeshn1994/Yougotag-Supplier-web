@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Purchase Update</div>
+<div class="update">
+  <div class="row">
+      <div class="col-lg-4">
+   
+          <label style="color: black; margin-bottom: -9px;" class="md-required" for="order">Invoice / PO Number</label> 
+          <input style="width: 70%; height: 40px;" id="order" data-ng-model="mainFrm.order" maxlength="128" data-ng-blur="getOrderList(mainFrm.order)" data-ng-keyup="autodisplayponumber(mainFrm.order)" required="" ng-model-options="{debounce:500}" class="ng-pristine md-input ng-invalid ng-invalid-required ng-valid-maxlength ng-touched" aria-invalid="true"><div class="md-errors-spacer"></div>
+       
+        <!-- ngIf: orderValidation.length>0 -->
+      </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Purchase Update (Inward)</h2>
+          <div class="panel-body egp-panel-body">
+              <div class="dataTable_wrapper">
+                <!-- ngIf: updateStockErrMsg.length > 0 --><table class="table table-bordered">
+                  <thead>
+                    <tr class="egp-headerbold">
+                      <th style="text-align: -webkit-right;">#</th>
+                      <th>C&amp;A/C&amp;F</th>
+                      <th>Drug Name</th>
+                      <th>Mfg/Mkt</th>
+                      <th>Batch</th>
+                      <th>Supplied When</th>
+                      <th>Exp. Date</th>
+                      <th style="text-align: -webkit-right;">Qty Supplied</th>
+                      <th style="text-align: -webkit-right;">Qty Avl</th>
+                      <th style="text-align: -webkit-right;">Packing</th>
+                      
+                      <th style="text-align: -webkit-right;">PTS</th>
+                      <th style="text-align: -webkit-right;">PTR</th>
+                      <th style="text-align: -webkit-right;">MRP</th>
+                      
+                      <th style="text-align: -webkit-right;">CGST%</th>
+                      <th style="text-align: -webkit-right;">Addl.GST%</th>
+                      
+                      <th style="text-align: center;"></th>
+                      <th style="text-align: center;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                    
+                    <!-- ngRepeat: drugdetailobj in drugDetailList track by $index -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="pull-right" style="padding-bottom: 10px">
+                <button type="button" class="btn btn-danger" ng-click="clearDrugList()">Clear</button>
+                
+              </div>
+            </div>
+          </div>
+          </div>
+          </div>

@@ -1,0 +1,7 @@
+{
+    "/suppliers/*":{
+        "target": "http://localhost:8080/services",
+        "secure":false,
+        "changeOrigin":true
+    }
+}

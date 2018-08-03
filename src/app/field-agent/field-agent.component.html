@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Setup &gt;&gt; Field Agents</div>
+<div class="field">
+  <div class="row">
+      <div class="col-sm-12">
+          
+          <button type="submit" class="btn btn-primary" data-ng-click="addNewOpen()" data-toggle="modal" data-target="#fieldagentnewModal" data-backdrop="static" data-keyboard="false">
+            Add New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i>
+          </button>
+         
+        </div>
+  </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Pharmacy Orders</h2>
+          <div class="dataTable_wrapper">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="egp-headerbold">
+                    <th style="text-align: -webkit-right;">#</th>
+                    <th>Employee ID</th>
+                    <th hidden="true">Profile Picture</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                    <th style="text-align: -webkit-right;">Contact Number</th>
+                    <th>Status</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ngRepeat: fieldAgentDataObj in fieldAgentListArr track by $index --><tr data-ng-repeat="fieldAgentDataObj in fieldAgentListArr track by $index" class="egp-word-wrap egp-black ng-scope">
+                    <th style="text-align: -webkit-right;" class="ng-binding">1</th>
+                    <td hidden="true" class="ng-binding"></td>
+                    <td hidden="true" class="ng-binding">80</td>
+                    <th class="ng-binding">A005</th>
+                    <th hidden="true">Profile Picture</th>
+                    <th class="ng-binding">Deepak</th>
+                    <th class="ng-binding">V</th>
+                    <th class="ng-binding">dvedanthan</th>
+                    <th style="text-align: -webkit-right;" class="ng-binding">8762311847</th>
+                    <!-- ngIf: fieldAgentDataObj.activeOrNot === 'A' --><th data-ng-if="fieldAgentDataObj.activeOrNot === 'A'" class="ng-scope">Active</th><!-- end ngIf: fieldAgentDataObj.activeOrNot === 'A' -->
+                    <!-- ngIf: fieldAgentDataObj.activeOrNot === 'I' -->
+                    <th style="text-align: center;">
+                        <a data-toggle="modal" data-target="#fieldagentnewModal" data-ng-click="updateFieldAgentData(fieldAgentDataObj)" data-backdrop="static" data-keyboard="false"><abbr title="Edit" class="egp-border-bottom"><i class="fa fa-pencil-square-o egp-font24"></i></abbr></a>
+                      </th>
+                      <th data-toggle="modal" data-ng-click="deleteFieldAgentData(fieldAgentDataObj)" data-target="#deleteFieldAgents" style="text-align: center;" role="button" tabindex="0">
+                        <a><abbr title="Delete" class="egp-border-bottom"><i class="fa fa-trash egp-font24"></i></abbr></a>
+                      </th>
+                  </tr><!-- end ngRepeat: fieldAgentDataObj in fieldAgentListArr track by $index --><tr data-ng-repeat="fieldAgentDataObj in fieldAgentListArr track by $index" class="egp-word-wrap egp-black ng-scope">
+                   
+                  <tr data-ng-show="fieldAgentListArr.length==0" aria-hidden="true" class="ng-hide">
+                          <td colspan="8" style="color: black;text-align: center;">
+                              No data available.                
+                          </td>
+                      </tr>
+                </tbody>
+              </table>
+       
+            </div>

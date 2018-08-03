@@ -1,0 +1,107 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Setup &gt;&gt; Sales Targets</div>
+<div class="sale">
+    <div class="row">
+        <div class="col-sm-4">
+     
+            <select name="fieldAgentSalesTargetData" data-ng-model="fieldAgentSalesTargetData" data-ng-init="fieldAgentSalesTargetData =''" id="fieldAgentSalesTargetData" style="width: 100%;" required="required" class="ng-pristine ng-invalid ng-invalid-required ng-touched" aria-invalid="true">
+              <option value="">--Select Agent--</option>
+             
+            </select>
+        </div>
+        <div class="col-sm-2">
+          <select name="monthSelectForSearch" id="monthSelectForSearch" data-ng-model="monthSelectForSearch" data-ng-init="monthSelectForSearch =''" style="width: 100%;" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+            <option value="">--Month--</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <select name="yearSelectForSearch" id="yearSelectForSearch" data-ng-model="yearSelectForSearch" data-ng-init="yearSelectForSearch =''" style="width: 100%;" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+            <option value="">--Year--</option>
+            <!-- ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2018" class="ng-binding ng-scope">2018</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2019" class="ng-binding ng-scope">2019</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2020" class="ng-binding ng-scope">2020</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2021" class="ng-binding ng-scope">2021</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2022" class="ng-binding ng-scope">2022</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2023" class="ng-binding ng-scope">2023</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2024" class="ng-binding ng-scope">2024</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2025" class="ng-binding ng-scope">2025</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2026" class="ng-binding ng-scope">2026</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2027" class="ng-binding ng-scope">2027</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2028" class="ng-binding ng-scope">2028</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2029" class="ng-binding ng-scope">2029</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2030" class="ng-binding ng-scope">2030</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2031" class="ng-binding ng-scope">2031</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2032" class="ng-binding ng-scope">2032</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2033" class="ng-binding ng-scope">2033</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2034" class="ng-binding ng-scope">2034</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2035" class="ng-binding ng-scope">2035</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2036" class="ng-binding ng-scope">2036</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2037" class="ng-binding ng-scope">2037</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2038" class="ng-binding ng-scope">2038</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2039" class="ng-binding ng-scope">2039</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2040" class="ng-binding ng-scope">2040</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2041" class="ng-binding ng-scope">2041</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2042" class="ng-binding ng-scope">2042</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2043" class="ng-binding ng-scope">2043</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2044" class="ng-binding ng-scope">2044</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2045" class="ng-binding ng-scope">2045</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2046" class="ng-binding ng-scope">2046</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2047" class="ng-binding ng-scope">2047</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2048" class="ng-binding ng-scope">2048</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2049" class="ng-binding ng-scope">2049</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2050" class="ng-binding ng-scope">2050</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2051" class="ng-binding ng-scope">2051</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2052" class="ng-binding ng-scope">2052</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2053" class="ng-binding ng-scope">2053</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2054" class="ng-binding ng-scope">2054</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2055" class="ng-binding ng-scope">2055</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2056" class="ng-binding ng-scope">2056</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2057" class="ng-binding ng-scope">2057</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2058" class="ng-binding ng-scope">2058</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2059" class="ng-binding ng-scope">2059</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2060" class="ng-binding ng-scope">2060</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2061" class="ng-binding ng-scope">2061</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2062" class="ng-binding ng-scope">2062</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2063" class="ng-binding ng-scope">2063</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2064" class="ng-binding ng-scope">2064</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2065" class="ng-binding ng-scope">2065</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2066" class="ng-binding ng-scope">2066</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2067" class="ng-binding ng-scope">2067</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2068" class="ng-binding ng-scope">2068</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2069" class="ng-binding ng-scope">2069</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2070" class="ng-binding ng-scope">2070</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2071" class="ng-binding ng-scope">2071</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2072" class="ng-binding ng-scope">2072</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2073" class="ng-binding ng-scope">2073</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2074" class="ng-binding ng-scope">2074</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2075" class="ng-binding ng-scope">2075</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2076" class="ng-binding ng-scope">2076</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2077" class="ng-binding ng-scope">2077</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2078" class="ng-binding ng-scope">2078</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2079" class="ng-binding ng-scope">2079</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2080" class="ng-binding ng-scope">2080</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2081" class="ng-binding ng-scope">2081</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2082" class="ng-binding ng-scope">2082</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2083" class="ng-binding ng-scope">2083</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2084" class="ng-binding ng-scope">2084</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2085" class="ng-binding ng-scope">2085</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2086" class="ng-binding ng-scope">2086</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2087" class="ng-binding ng-scope">2087</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2088" class="ng-binding ng-scope">2088</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2089" class="ng-binding ng-scope">2089</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2090" class="ng-binding ng-scope">2090</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2091" class="ng-binding ng-scope">2091</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2092" class="ng-binding ng-scope">2092</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2093" class="ng-binding ng-scope">2093</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2094" class="ng-binding ng-scope">2094</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2095" class="ng-binding ng-scope">2095</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2096" class="ng-binding ng-scope">2096</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2097" class="ng-binding ng-scope">2097</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2098" class="ng-binding ng-scope">2098</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2099" class="ng-binding ng-scope">2099</option><!-- end ngRepeat: yearObj in options track by $index --><option data-ng-repeat="yearObj in options track by $index" value="2100" class="ng-binding ng-scope">2100</option><!-- end ngRepeat: yearObj in options track by $index -->
+          </select>
+        </div>
+
+        <div class="col-sm-2">
+         
+            <button type="submit" class="btn btn-primary">Search</button>
+            &nbsp;&nbsp;&nbsp;
+            <button type="reset" class="btn btn-danger egp-button-width" data-ng-click="clearSearchForSalesTarget()">Clear</button>
+            <br>
+          
+        </div>
+        <div class="col-sm-2">
+          
+            <button type="button" class="btn btn-primary" data-ng-click="addSalestarget()" data-backdrop="static" data-keyboard="false">
+              Add New&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i>
+            </button>
+          
+        </div>
+      </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Sales Targets</h3>
+          <div class="dataTable_wrapper">
+              <table class="table table-bordered">
+                <thead>
+                <tr style="border: 1px solid black" class="egp-headerbold">
+                  <th rowspan="2" scope="colgroup" style="border: 1px solid #ddd;text-align: -webkit-right;">#</th>
+                  <th rowspan="2" scope="colgroup" style="border: 1px solid #ddd">Name</th>
+                  <th rowspan="2" scope="colgroup" style="border: 1px solid #ddd">Start Date</th>
+                  <th rowspan="2" scope="colgroup" style="border: 1px solid #ddd">End Date</th>
+                  <th colspan="4" scope="colgroup" style="text-align: center;border: 1px solid #ddd">Sales Target</th>
+                  <th rowspan="2" scope="colgroup" style="border: 1px solid #ddd"></th>
+                  <th rowspan="2" scope="colgroup" style="border: 1px solid #ddd"></th>
+                </tr>
+                <tr style="border: 1px solid #ddd" class="egp-headerbold">
+                  <th scope="col" style="border: 1px solid #ddd">Type</th>
+                  <th scope="col" style="border: 1px solid #ddd;text-align: -webkit-right;">Target Value</th>
+                  <th scope="col" style="border: 1px solid #ddd;text-align: -webkit-right;">Accomplished</th>
+                  <th scope="col" style="border: 1px solid #ddd;text-align: -webkit-right;">Trend</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <!-- ngRepeat: salesTargetDataObj in salesTargetListArr track by $index --><tr data-ng-repeat="salesTargetDataObj in salesTargetListArr track by $index" class="egp-word-wrap egp-black ng-scope">
+                  <td style="text-align: -webkit-right;" class="ng-binding">1</td>
+                  <td class="ng-binding">savi sri</td>
+                  <td class="ng-binding">01-02-2017</td>
+                  <td class="ng-binding">28-02-2017</td>
+                  <!-- ngIf: salesTargetDataObj.targetType === 'S' --><td data-ng-if="salesTargetDataObj.targetType === 'S'" class="ng-scope">Sales</td><!-- end ngIf: salesTargetDataObj.targetType === 'S' -->
+                  <!-- ngIf: salesTargetDataObj.targetType === 'U' -->
+                  <td style="text-align: -webkit-right;" class="ng-binding">1000</td>
+                  <td style="text-align: -webkit-right;" class="ng-binding">0.00</td>
+                  <!-- ngIf: salesTargetDataObj.trend<0 --><td style="text-align: -webkit-right;color:red;font-weight:bold;" ng-if="salesTargetDataObj.trend<0" class="ng-binding ng-scope">-100.00%</td><!-- end ngIf: salesTargetDataObj.trend<0 -->
+                  <!-- ngIf: salesTargetDataObj.trend>=0 -->
+                  <td style="text-align: center;">
+                    <a data-toggle="modal" data-ng-click="updateSalesTargetload(salesTargetDataObj)" data-backdrop="static" data-keyboard="false"><abbr title="Edit" class="egp-border-bottom"><i class="fa fa-pencil-square-o egp-font24"></i></abbr></a>
+                  </td>
+                  <td data-toggle="modal" data-target="#deleteSalesTargets" data-backdrop="static" data-keyboard="false" data-ng-click="deleteSalesTargetData(salesTargetDataObj)" style="text-align: center;" role="button" tabindex="0">
+                    <a><abbr title="Delete" class="egp-border-bottom"><i class="fa fa-trash egp-font24"></i></abbr></a>
+                  </td>
+                </tr><!-- end ngRepeat: salesTargetDataObj in salesTargetListArr track by $index --><!-- end ngRepeat: salesTargetDataObj in salesTargetListArr track by $index -->
+                <tr data-ng-show="salesTargetListArr.length==0" aria-hidden="true" class="ng-hide">
+                  <td colspan="9" style="color: black;text-align: center;">
+                    No data available.
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+         </div>
+    </div>
+</div>          

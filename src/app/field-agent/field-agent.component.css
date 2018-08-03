@@ -1,0 +1,19 @@
+button.btn.btn-primary {
+    background-color: #009688 !important;
+    border: 1px solid #009688 !important;
+    float: right;
+}
+
+h2.card-title {
+    padding: 10px 20px;
+}
+.card {
+    border-radius: 0px;
+    border: none;
+    box-shadow: 0px 6px 9px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.field {
+    padding: 19px;
+}

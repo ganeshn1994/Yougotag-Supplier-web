@@ -1,0 +1,284 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+       <a class="navbar-brand suppliername" href="#">Egangaa Supplier</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <!-- <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Page 1-1</a></li>
+              <li><a href="#">Page 1-2</a></li>
+              <li><a href="#">Page 1-3</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Page 2</a></li>
+          <li><a href="#">Page 3</a></li>
+        </ul> -->
+        <ul class="nav navbar-nav navbar-right">
+          <!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
+          <li><a href="#"><span (click)="logout()" class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="navbar navbar-inverse second">
+      <div class="container-fluid">
+        <!-- <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+         <a class="navbar-brand suppliername" href="#">WebSiteName</a>
+        </div> -->
+        
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li ><a href="#">Roles</a></li>
+            <li routerLinkActive='active'><a href="home">Sales Invoice</a></li>
+            <li><div class="dropdown">
+
+            <button class="dropbtn" href="#">Transactions</button>
+              <div class="dropdown-content">
+                <a href="pharmacyorder"> Pharmacy Orders (Sale Orders)</a>               
+                <a href="createinvoice" >Create Sales Invoice</a>
+                <a href="purchaseinvoice" >Purchase Invoice (Inward)</a>
+                <a href="purchaseupdate">Purchase Update (Inward)</a>
+                <a href="approvepayment" >Approve Payments</a>
+                <a href="managepayment" >Manage Payments</a>
+                <a href="debitnote" >Approve/Reject Debit Notes</a>
+                <a href="salesreturn" >Sales Returns (Stock Returns)</a>
+                <a href="creditnote" >Credit Note History</a>
+              </div></div></li>              
+            <li>
+              <div class="dropdown">
+              <button class="dropbtn" href="#">Setup</button>
+                <div class="dropdown-content">
+                <a href="fieldagent" >Field Agents</a>                
+                <a href="assignarea" >Assign Areas</a>                  
+                <a href="salestarget" >Sales Targets</a>  
+                <div class="seperator"></div>               
+                <a href="preferedpharma" >Preferred Pharmacies</a>                  
+                <a data-toggle="modal" data-target="#defaultDiscount" href="getDefaultDiscount" href="" accesskey="d">Default Discount</a>             
+                <a href="schemes"  accesskey="m">Schemes</a>
+                <a data-toggle="modal" data-target="#defaultPTR" href="getDefaultPTR" href="" accesskey="d">Default PTR</a>
+                    </div></div></li>
+            <li>
+                <div class="dropdown">
+                  <button class="dropbtn" href="#">Reports</button>
+                  <div class="dropdown-content">
+                      <a data-ng-click="stock_report_show()" data-toggle="modal" data-target="#Stock" href="" accesskey="g">Stock and Sales Report</a>
+                      <a data-ng-click="company_sales_report_show()" data-toggle="modal" data-target="#companywise" href="" accesskey="g">Company-wise Sales Report</a>                  
+                    </div>
+                      
+                </div>
+            </li>
+            <li><a href="knowmedicine">Know Your Medicine</a></li>
+            <li><a href="janitram">Janitram</a></li>
+            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-bell"></span></a></li> 
+            <!--<li><a href="#"><span (click)="logout()" class="glyphicon glyphicon-log-in"></span> Logout</a></li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--Default Discount Percentage-->
+    <div class="container">
+                                 
+        <!-- Modal -->
+        <div class="modal fade" id="defaultDiscount" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Default Discount Percentage</h4>
+              </div>
+              <div class="modal-body">
+                    <div class="row discount">
+                        <div class="col-sm-10">
+                          <label style="color: black;" for="defaultDiscount" class="md-required">Enter Default Discount %</label> 
+                          <input name="defaultDiscount" id="defaultDiscount" data-ng-model="defaultDiscount" onkeyup="restrictTwoDecimal(this)" style="width: 100%;" required="" class="ng-pristine ng-untouched md-input ng-valid ng-valid-required" aria-invalid="false">
+                          <div class="md-errors-spacer"></div> 
+                        </div>
+                        <div class="col-sm-6">
+                          <button type="submit" value="Submit" class="btn btn-primary egp-button-width">Save</button>
+                        </div>
+               
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+      </div>
+
+      <!--Default PTR-->
+    <div class="container">
+                                 
+        <!-- Modal -->
+        <div class="modal fade" id="defaultPTR" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Default PTR %</h4>
+              </div>
+              <div class="modal-body">
+                    <div class="row discount">
+                        <div class="col-sm-10">
+                          <label style="color: black;" for="defaultDiscount" class="md-required">Enter Default PTR %</label> 
+                          <input name="defaultDiscount" id="defaultDiscount" data-ng-model="defaultDiscount" onkeyup="restrictTwoDecimal(this)" style="width: 100%;" required="" class="ng-pristine ng-untouched md-input ng-valid ng-valid-required" aria-invalid="false">
+                          <div class="md-errors-spacer"></div> 
+                        </div>
+                        <div class="col-sm-6">
+                          <button type="submit" value="Submit" class="btn btn-primary egp-button-width">Save</button>
+                        </div>
+               
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+      </div>
+
+       <!--Sales and Stocks-->
+    <div class="container">
+                                 
+        <!-- Modal -->
+        <div class="modal fade" id="Stock" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Default PTR %</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <label style="color: black; margin-bottom: -9px;" class="md-required" for="company">C&amp;A/C&amp;F</label> <input style="width: 90%; height: 40px;" data-ng-model="company" id="company" data-ng-keyup="getcacflist(company)" required="" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" aria-invalid="true"><div class="md-errors-spacer"></div>
+                        <div class="egp-errorClass-color ng-binding"></div>
+                      </div>
+                      <div class="col-lg-6">
+                        <input style="width: 90%; height: 40px;" data-ng-model="company_hidden" id="company_hidden" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                      </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-6">
+                            <select id="salesMonth" name="salesMonth" data-ng-model="salesMonth" data-ng-init="salesMonth =''" required="" class="ng-pristine ng-invalid ng-invalid-required ng-touched" aria-invalid="true">
+                              <option value="">--Select Month--</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <!-- ngIf: monthValidation.length>0 -->
+                          </div>
+                          <div class="col-sm-6">
+                          <select id="salesYear" name="salesYear" data-ng-model="salesYear" data-ng-init="salesYear =''" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required" aria-invalid="true">
+                              <option value="">--Select Year--</option>
+                              <!-- ngRepeat: year in salesyearlist track by $index --><option data-ng-repeat="year in salesyearlist track by $index" value="2016" class="ng-binding ng-scope">2016</option><!-- end ngRepeat: year in salesyearlist track by $index --><option data-ng-repeat="year in salesyearlist track by $index" value="2017" class="ng-binding ng-scope">2017</option><!-- end ngRepeat: year in salesyearlist track by $index --><option data-ng-repeat="year in salesyearlist track by $index" value="2018" class="ng-binding ng-scope">2018</option><!-- end ngRepeat: year in salesyearlist track by $index -->
+                            </select>
+                          </div>
+                        </div>
+              <div class="modal-footer">
+                  <div class="col-sm-5 pull-right" >
+                      <button type="button" style="margin-top: 10px" ng-click="salesReportResetBtn()" class="btn btn-danger egp-button-width">Reset</button>
+                      <button type="submit" class="btn btn-primary egp-button-width" style="width: 90px !important;">Generate</button>
+                    </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+      </div>
+
+
+       <!--Company-wise Sales Report-->
+    <div class="container">
+                                 
+        <!-- Modal -->
+        <div class="modal fade" id="companywise" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Company-wise Sales Report</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <label style="color: black; margin-bottom: -9px;" class="md-required" for="company">C&amp;A/C&amp;F</label> <input style="width: 90%; height: 40px;" data-ng-model="company" id="company" data-ng-keyup="getcacflist(company)" required="" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" aria-invalid="true"><div class="md-errors-spacer"></div>
+                        <div class="egp-errorClass-color ng-binding"></div>
+                      </div>
+                      <div class="col-lg-6">
+                        <input style="width: 90%; height: 40px;" data-ng-model="company_hidden" id="company_hidden" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                      </div>
+                      </div>
+                      <div class="row date">
+                          <div class="col-sm-6">
+                            <div class="input-group">
+                              <input class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" data-ng-model="startDateInCompanyReport" id="startDateInCompanyReport" type="text" placeholder="Start Date" data-provide="datepicker"  required="" aria-invalid="true"> <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-group">
+                              <input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="endDateInCompanyReport" id="endDateInCompanyReport" type="text" placeholder="End Date" data-provide="datepicker"  required="" aria-invalid="true"> <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+                            </div>
+              
+                          </div>
+                          <!-- ngIf: dateValidationForCompanyReport.length>0 -->
+                        </div>
+              <div class="modal-footer">
+                  <div class="col-sm-5 pull-right" >
+                      <button type="button" style="margin-top: 10px" ng-click="salesReportResetBtn()" class="btn btn-danger egp-button-width">Reset</button>
+                      <button type="submit" class="btn btn-primary egp-button-width" style="width: 90px !important;">Generate</button>
+                    </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+      </div>

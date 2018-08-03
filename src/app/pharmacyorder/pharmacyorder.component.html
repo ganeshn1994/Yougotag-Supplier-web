@@ -1,0 +1,146 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Pharmacy Orders (Sale Orders)</div>
+<div class="col-sm-2">
+  <select id="pharmacyInInvoice" name="pharmacyInInvoice" (change)="selectChangeHandler($event)">
+    <option>--Select Pharmacy--</option>
+    <option *ngFor="let names of apiservice.pharmaname" value={{names}}>
+        {{names.pharmacyName}}
+    </option>
+  </select>
+</div>
+  <div class="col-sm-2">
+      <div class="input-group">
+        <input class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startdate" type="text" placeholder="Start Date" data-provide="datepicker" aria-invalid="false">
+        <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+      </div>
+      <div class="egp-errorClass-color ng-binding"></div>
+    </div>
+    <div class="col-sm-2">
+        <div class="input-group">
+          <input class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="enddate" type="text" placeholder="End Date" data-provide="datepicker" aria-invalid="false">
+          <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+        </div>
+        <!-- <div data-ng-if="datevalidation === 'true'" class="egp-errorClass-color">{{datevalidation}}</div> -->
+        <div class="egp-errorClass-color ng-binding"></div>
+      </div>
+      <div class="col-sm-2">
+         <select name="Status" id="postatus" [(ngModel)]="status" ng-init="Status =''" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+            <option value="">--Select Status--</option>
+            <option value="A">Approved</option>
+            <option value="P">Pending</option>
+            <option value="R">Rejected</option>
+          </select>
+      </div>
+      <div class="col-sm-2">
+          
+            <button type="submit" (click)="displayPOList(pharmacyid,status,startdate,enddate)" class="btn btn-primary">Search</button>
+            &nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger egp-button-width" (click)="clearSearchFilters()">Clear</button>
+            <br>
+          
+        </div>
+        <div class="col-sm-2">
+              <button type="submit" class="btn btn-primary" data-ng-click="" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
+                Raise PO&nbsp;&nbsp;&nbsp;<i class="fa fa-plus"></i>
+              </button>
+          </div>
+
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-body">
+                    <h2 class="card-title">Pharmacy Orders</h2>
+                    <div class="dataTable_wrapper">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr class="egp-headerbold">
+                                <th style="text-align: -webkit-right;">#</th>
+											            <th>PO No.</th>
+											            <th>PO Date</th>
+											            <th>Pharmacy</th>
+											            <th>Field Agent</th>
+											            <th>Status</th>
+											            <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <!-- ngIf: janitramListArr.length ==0 -->
+                            <!-- ngRepeat: janitramDataObj in janitramListData track by $index -->
+                            <th style="text-align: -webkit-right;" class="ng-binding">1</th>
+                                    <td  class="ng-binding">EGP/PO/2018-19/00000087</td>
+                                    <td class="ng-binding">13/07/2018 17:09:47</td>
+                                    <td class="ng-binding">EGANGAA PHARMACY</td>
+                                    <td class="ng-binding"></td>
+                                    <td data-ng-if="purchaseOrderObj.poStatus=='A'" class="ng-scope">Approved</td> 
+                                    <td style="text-align: center;"><a data-ng-click="viewInvoice(invoiceDataObj)" id="2610"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td>
+                                  
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--Raise PO Modal-->
+              <div class="container">
+                                 
+                  <!-- Modal -->
+                  <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Raise PO</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-sm-6">
+                                  <select id="raisepopharmacy" required="">
+                                    <option value="">-- Select Pharmacy --</option>
+                                    <!-- ngRepeat: pharmacy in prefferrdPharmacyListArr track by $index --><option data-ng-repeat="pharmacy in prefferrdPharmacyListArr track by $index" value="368" class="ng-binding ng-scope">***MEDICINE POINT</option>
+                                  </select>
+                              </div>
+                              <div class="col-sm-6">
+												
+                                  
+                                     <label style="color: black;" for="drugpurchaseorder">Search Drug</label> 
+                                        <input data-ng-model="drugname" id="drugpurchaseorder" data-ng-keyup="autodisplayDrugNamesinInvoice(drugname, '')" class="ng-pristine ng-valid md-input ng-touched" aria-invalid="false"><div class="md-errors-spacer"></div>
+                                   
+                                    <input data-ng-model="drugpurchaseorder_packing" id="drugpurchaseorder_packing" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                                  
+                                  <div class="egp-errorClass-color ng-binding"></div>
+                              
+                            </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-sm-12 table" style="overflow:auto !important; height:45%">
+                                <table class="table table-bordered">
+                                  <thead>
+                                  <tr class="egp-headerbold">
+                                    <th style="text-align: -webkit-right;">#</th>
+                                    <th>Drug Name</th>
+                                    <th style="text-align: -webkit-right;width: 90px;">Qty Available</th>
+                                    <th style="text-align: -webkit-right;width: 90px;">Qty Ordered</th>
+                                    <th></th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+        
+                                  <!-- ngRepeat: drugobj in drugsArr -->
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  
+                </div>
+                
+

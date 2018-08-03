@@ -1,0 +1,55 @@
+<div class="col-md-12 loginbg">
+  <img style="float: right;width:2% " src="../../assets/img/question.png">
+
+<div class="col-md-3 login">
+  <mat-card>
+      <form class="example-form">
+          <mat-form-field class="example-full-width">
+              <input matInput type="text" [(ngModel)]="loginData.loginName" name="loginName" matInput placeholder="Username">
+            </mat-form-field>
+         <br>
+        
+          <mat-form-field class="example-full-width">
+            <input matInput type="password" [(ngModel)]="loginData.password" name="password" matInput placeholder="Password">
+          </mat-form-field>
+          <br>
+          <button mat-raised-button data-toggle="modal" data-target="#supplier"  (click)="loginPost()">Sign In</button>
+          <!-- <button mat-raised-button (click)="getDetails()">Get Details</button> -->
+          <br>
+          <a routerLink="home">Forgot Password ?</a>
+
+        </form>
+  </mat-card>
+</div>
+
+<div class="container">
+                                 
+  <!-- Modal -->
+  <div class="modal fade" id="supplier" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Supplier</h4>
+        </div>
+        <div class="modal-body">
+         <ul>
+                <li *ngFor="let tenant of apiservice.tenantList">
+                    <a *ngIf = "tenant.tenantClassification=='S'" (click) = "getTenantId(tenant.tenantids)">{{tenant.tenantEstablishmentName}} </a>    
+                </li>
+         </ul>     
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</div>
+
+</div>
+

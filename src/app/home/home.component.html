@@ -1,0 +1,207 @@
+<app-navbar>
+
+</app-navbar>
+<div class="sale">
+<div class="row">
+    <div class="col-sm-2">
+        <select id="pharmacyInInvoice" name="pharmacyInInvoice" (change)="selectChangeHandler($event)">
+          <option>--Select Pharmacy--</option>
+          <option *ngFor="let names of apiservice.pharmaname" value={{names}}>
+              {{names.pharmacyName}}
+          </option>
+        </select>
+      </div>
+    <div class="col-sm-2">
+        <div class="input-group">
+          <input class="form-control ng-pristine ng-valid ng-touched" (change)="startdates($event)" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="Start Date" data-provide="datepicker" aria-invalid="false"> <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="input-group">
+          <input class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="End Date" data-provide="datepicker" aria-invalid="false"> <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+        </div>
+        <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
+    </div>
+    <div class="col-sm-2">
+        <select id="Status" name="Status" [(ngModel)]="status" ng-init="Status =''" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+          <option value="">--Select Status--</option>
+          <option value="A">Approved</option>
+          <option value="P">Pending</option>
+          <option value="RR">Rejection Raised</option>
+          <option value="RA">Rejection Accepted</option>
+          <option value="RD">Rejection Declined</option>
+          <option value="GD">Goods Delivered</option>
+          <option value="GR">Goods Received</option>
+        </select>
+    </div>
+    <div class="col-sm-2">
+        <select id="paymentStatus" name="paymentStatus" [(ngModel)]="paymentStatus" data-ng-init="paymentStatus =''" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+          <option value="">--Select Payment Status--</option>
+          <option value="FP">Fully Paid</option>
+          <option value="PP">Partially Paid</option>
+          <option value="NP">Unpaid</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+          
+          <button type="submit" (click)="search()" class="btn btn-primary">Search</button>
+          &nbsp;&nbsp;&nbsp;
+          <button type="button" class="btn btn-danger egp-button-width" data-ng-click="clearInvoicedetailInSearch()">Clear</button>
+          <br>
+          
+        </div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Sales Invoices</h5>
+      <div class="dataTable_wrapper">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="egp-headerbold">
+                  <th style="text-align: -webkit-right;">#</th>
+                  <th>Invoice No.</th>
+                  <th>Invoice Date</th>
+                  <th>Pharmacy</th>
+                  <th>Field Agent</th>
+                  <th>Invoice Status</th>
+                  <th style="text-align: -webkit-right;">Amount</th>
+                  <th style="text-align: right;">Credit Amount</th>
+                  <th style="text-align: -webkit-right;">Paid Amount</th>
+                  <!-- <th style="text-align: center;" data-ng-if="invoiceDataObj.invoiceStatus==='A' || invoiceDataObj.invoiceStatus==='GD'">Payment</th> -->
+                  <th>Payment Status</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let invoice of apiservice.invoicelist">
+              <th style="text-align: -webkit-right;" class="ng-binding">{{invoice.id}}</th>
+											<td hidden="true" class="ng-binding">{{invoice.supplierId}}</td>
+											<td class="ng-binding">{{invoice.invoiceNumber}}</td>
+											<td class="ng-binding">{{invoice.invoiceDate}}</td>
+											<td class="ng-binding">{{invoice.pharmacyName}}</td>
+											<td class="ng-binding"></td>
+											<td data-ng-if="invoiceDataObj.invoiceStatus==='P'" class="ng-scope">{{invoice.invoiceStatus}}</td>
+											<td style="text-align: right;" class="ng-binding">{{invoice.grandTotal}}</td>
+											<td style="text-align: right;" class="ng-binding">{{invoice.totalAdjustmentAmount}}</td>
+											<td style="text-align: right;" class="ng-binding">{{invoice.paidAmount}}</td>
+											<td class="ng-binding">Unpaid</td>
+											<td style="text-align: center;"><a data-toggle="modal" (click)="paymentView(invoiceDataObj)" data-target="#paymentDetails"><abbr title="ViewPayment" class="egp-border-bottom"><i class="fa fa-credit-card egp-font24"></i></abbr></a></td>
+											<td style="text-align: center;"><a (click)="getInvoiceId(invoice.invoiceNumber)" data-toggle="modal" data-target="#viewInvoice" id="2610"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td>
+										</tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+                                 
+  <!-- Modal -->
+  <div class="modal fade" id="viewInvoice" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">View Invoice</h4>
+        </div>
+        <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <b>pharmacyName:</b>{{apiservice.pharmacyname}}
+          </div>
+          <div class="col-md-4">
+            <b>PO Number:</b>{{apiservice.ponumber}}
+          </div>
+          <div class="col-md-4">
+            <b>Invoice Number:</b>{{apiservice.invnum}}
+          </div>
+        </div>
+            <div class="dataTable_wrapper viewinvoice">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="egp-headerbold">
+                        <th style="text-align: -webkit-right;">#</th>
+                        <th>Drug Name</th>
+                        <th>Qty Available</th>
+                        <th>Qty to be Supplied</th>
+                        <th>Free Qty</th>
+                        <th>Sale Rate</th>
+                        <th style="text-align: -webkit-right;">Batch</th>
+                        <th style="text-align: right;">Expiry</th>
+                        <th style="text-align: -webkit-right;">MRP</th>
+                        <th style="text-align: -webkit-right;">GST%</th>
+                        <th style="text-align: -webkit-right;">Gst On</th>
+                        <th style="text-align: -webkit-right;">Mfg/Mkt</th>
+                        <th style="text-align: -webkit-right;">Disc%</th>
+                        <th style="text-align: -webkit-right;">Scheme Value</th>
+                        <th style="text-align: -webkit-right;">Total</th>
+                        <th></th>
+                        
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let invoice of apiservice.saledetails ">
+                    <th style="text-align: -webkit-right;" class="ng-binding">{{invoice.id}}</th>
+                            <td hidden="true" class="ng-binding">{{invoice.supplierId}}</td>
+                            <td class="ng-binding">{{invoice.tradeCompositeId}}</td>
+                            <td class="ng-binding">{{invoice.quantityAvailable}}</td>
+                            <td class="ng-binding">{{invoice.quantitySupplied}}</td>
+                            <td class="ng-binding">{{invoice.freeQuantityRounded}}</td>
+                            <td class="ng-scope">{{invoice.stockUnitSalePrice}}</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.batchNumber}}</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.expiryDate}}</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.discountPercentage}}</td>
+                            <td style="text-align: right;" class="ng-binding">CGST={{invoice.cgstPercentage}}<br>Addl.GST({{apiservice.gsttype}})={{invoice.additionalGstPercentage}}</td>
+                            <td *ngIf="invoice.taxOnWhat=='MI'" style="text-align: right;" class="ng-binding">MRP + Free</td>
+                            <td *ngIf="invoice.taxOnWhat=='ME'" style="text-align: right;" class="ng-binding">MRP - Free</td>
+                            <td *ngIf="invoice.taxOnWhat=='SI'" style="text-align: right;" class="ng-binding">Sale Rate + Free</td>
+                            <td *ngIf="invoice.taxOnWhat=='SE'" style="text-align: right;" class="ng-binding">Sale Rate - Free</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.manufacturerMnemonic}}</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.discountPercentage}}</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.schemeDiscountAmount}}</td>
+                            <td style="text-align: right;" class="ng-binding">{{invoice.unitTotal}}</td>
+                            <td style="text-align: center;"><a (click)="removeDrugName(invoicedetailsmaindataobj, $index)"><abbr title="Delete" class="egp-border-bottom">
+                                <i class="fa fa-trash egp-font24"></i></abbr></a></td>
+ 
+                            
+                          </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+          <div class="row total">
+            <div class="col-sm-3 ng-binding">
+              <b style="color: black; font-size: 14px; font-weight: bold !important;">Gross
+                Amount(After Discount):</b>{{apiservice.totalunitamt}}
+            </div>
+            <div class="col-sm-3 ng-binding">
+              <b style="color: black; font-size: 14px; font-weight: bold !important;">GST
+                Amount: </b>{{apiservice.totalgstamt}}
+            </div>
+            <div class="col-sm-3 ng-binding">
+              <b style="color: black; font-size: 14px; font-weight: bold !important;">Total
+                Amount: </b>{{apiservice.totalunitamt}}
+            </div>
+            <div class="col-sm-3 ng-binding">
+              <b style="color: black; font-size: 14px; font-weight: bold !important;">Credit
+                Amount: </b>0.00
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+
+
+  
+

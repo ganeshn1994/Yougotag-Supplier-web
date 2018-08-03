@@ -1,0 +1,405 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Janitram</div>
+<div class="janitram">
+    <div class="row">
+        <div class="col-sm-3">
+          <div class="slinput" ng-init="" style="width:300px">
+            <i class="fa fa-search left-icon"></i>
+            <input placeholder="Search by Report Name" ng-model="reportname" id="reportname" data-ng-keyup="getJanitramList(reportname,group)" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+            <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (schemedrugname.length > 0)}" ng-click="reportname = '';getJanitramList(reportname,group);" role="button" tabindex="0" class="fa fa-close right-icon"></i>
+          </div>
+          <!--<div class="input-group">-->
+                  <!--<span-->
+                    <!--class="input-group-addon egp-input-group-span egp-back-white"-->
+                    <!--id="sizing-addon2"><i class="fa fa-search"></i></span><input-->
+                    <!--data-ng-model="reportname" type="text"  ng-keyup="getJanitramList(reportname,group)"-->
+                    <!--class="form-control egp-input egp-input-height-border-color"-->
+                    <!--placeholder="Search by report name"-->
+                    <!--aria-describedby="sizing-addon2">-->
+                <!--</div>-->
+        </div>
+        <div class="col-sm-2">
+                <select name="group" id="group" data-ng-model="group" data-ng-change="getJanitramList(reportname,group)" data-ng-init="group =''" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+                  <option value="">---Select Group---</option>
+                  <option value="AUDIT">AUDIT</option>
+                  <option value="MASTER">MASTER</option>
+                  <option value="STOCKS">STOCKS</option>
+                  <option value="TRANSACTION">TRANSACTION</option>
+                   </select>
+        </div>
+        <div class="col-sm-2">
+          <div class="input-group">
+            <input class="form-control ng-pristine ng-untouched ng-valid" data-ng-model="gststartdate" id="gststartdate" type="text" placeholder="Start Date" data-date-start-date="01-07-2017" data-provide="datepicker" aria-invalid="false">
+            <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="input-group">
+            <input class="form-control ng-pristine ng-untouched ng-valid" data-ng-model="gstenddate" id="gstenddate" type="text" placeholder="End Date" data-date-start-date="01-07-2017" data-provide="datepicker" aria-invalid="false">
+            <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+          </div>
+          <div class="egp-errorClass-color ng-binding"></div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="input-group">
+            <div class="btn-group">
+              <div class="btn-group">
+                <label class="btn btn-default ng-pristine ng-untouched ng-valid active" id="gstFilter" btn-radio="'G'" ng-change="searchByGSTFilters('G')" ng-model="gstFilterOptions" ng-checked="true" ng-value="true" value="true" aria-checked="true" checked="checked" aria-invalid="false">
+                  GST
+                </label>
+                <label class="btn btn-default ng-pristine ng-untouched ng-valid" id="preGstFilter" btn-radio="'N'" ng-change="searchByGSTFilters('N')" ng-model="gstFilterOptions" aria-invalid="false">
+                  Pre-GST
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Janitram Reports</h3>
+          <div class="dataTable_wrapper">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="egp-headerbold">
+                    <th style="text-align: right;">#</th>
+                    <th>Report Groups</th>
+                    <th>Report Title</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <!-- ngIf: janitramListArr.length ==0 -->
+                  <!-- ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">1</td>
+                    <td class="ng-binding">TRANSACTION</td>
+                    <td hidden="true" class="ng-binding">43</td>
+                    <td class="ng-binding">Field Agent Target Report</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="43pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="43csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">2</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">25</td>
+                    <td class="ng-binding">List Of Areas</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="25pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="25csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">3</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">26</td>
+                    <td class="ng-binding">List of CA&amp;CF Agents</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="26pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="26csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">4</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">27</td>
+                    <td class="ng-binding">List Of Cities</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="27pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="27csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">5</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">36</td>
+                    <td class="ng-binding">List Of Countries</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="36pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="36csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">6</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">45</td>
+                    <td class="ng-binding">List Of Manufacturers</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="45pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="45csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">7</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">47</td>
+                    <td class="ng-binding">List Of Manufacturers &amp; Marketers</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="47pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="47csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">8</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">48</td>
+                    <td class="ng-binding">List Of Marketers</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="48pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="48csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">9</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">49</td>
+                    <td class="ng-binding">List Of Pharmacies</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="49pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="49csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">10</td>
+                    <td class="ng-binding">TRANSACTION</td>
+                    <td hidden="true" class="ng-binding">96</td>
+                    <td class="ng-binding">List Of Pharmacy PO</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="96pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="96csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">11</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">62</td>
+                    <td class="ng-binding">List Of States</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="62pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="62csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">12</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">65</td>
+                    <td class="ng-binding">List Of Suplier Gateway Mappings</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="65pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="65csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">13</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">63</td>
+                    <td class="ng-binding">List Of Supplier Addresses</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="63pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="63csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">14</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">64</td>
+                    <td class="ng-binding">List Of Supplier Field Agents</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="64pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="64csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">15</td>
+                    <td class="ng-binding">TRANSACTION</td>
+                    <td hidden="true" class="ng-binding">97</td>
+                    <td class="ng-binding">List Of Supplier Invoices</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="97pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="97csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">16</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">98</td>
+                    <td class="ng-binding">List Of Supplier Process Orders</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="98pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="98csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">17</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">67</td>
+                    <td class="ng-binding">List Of Supplier Stocks</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="67pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="67csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">18</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">66</td>
+                    <td class="ng-binding">List Of Supplier, Pharmacy and Field Agent Mapping</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="66pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="66csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">19</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">84</td>
+                    <td class="ng-binding">List Of Tenant Cards</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="84pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="84csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">20</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">87</td>
+                    <td class="ng-binding">List Of Tenant Roles</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="87pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="87csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">21</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">100</td>
+                    <td class="ng-binding">List Of Tenants And Tenant Addresses</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="100pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="100csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">22</td>
+                    <td class="ng-binding">MASTER</td>
+                    <td hidden="true" class="ng-binding">82</td>
+                    <td class="ng-binding">List Of Trade Names</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="82pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="82csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index --><tr data-ng-repeat="janitramDataObj in janitramListData track by $index" class="ng-scope">
+                    <td align="right" class="ng-binding">23</td>
+                    <td class="ng-binding">TRANSACTION</td>
+                    <td hidden="true" class="ng-binding">52</td>
+                    <td class="ng-binding">Pharmacy Credit Note Usage Transaction Report</td>
+                    
+                  <td>
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReport(janitramDataObj)" id="52pdf">PDF</button>
+
+                    <button type="botton" class="btn btn-primary" data-ng-click="generateJanitramReportCSV(janitramDataObj)" id="52csv">CSV</button>
+                          
+                          <!-- data-toggle="modal"
+                          data-target="#myModal" -->
+                      </td>
+                  </tr><!-- end ngRepeat: janitramDataObj in janitramListData track by $index -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+          </div>

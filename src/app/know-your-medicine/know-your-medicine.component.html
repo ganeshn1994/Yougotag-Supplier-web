@@ -1,0 +1,14 @@
+<app-navbar></app-navbar>
+
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Know Your Medicine</div>
+<div class="kym">
+<div class="row">
+    <div class="col-sm-4" style="margin-top: 6px;">
+        
+            <label style="color:black;" class="md-required" for="knowyourmedicine">Search Drug</label>
+            <input name="kymsearch" data-ng-model="kymsearch" id="knowyourmedicine" data-ng-keyup="drugSearchByKYM(kymsearch, '')" required="" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" aria-invalid="true"><div class="md-errors-spacer"></div>
+            <i style="font-size:16px !important" ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (kymsearch.length > 0)}" ng-click="kymsearch = '';clearIFrameData()" role="button" tabindex="0" class="fa fa-close right-icon"></i>
+        <!-- ngIf: kymerr === 'true' -->
+    </div>
+</div>
+</div>

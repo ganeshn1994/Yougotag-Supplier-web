@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Create Sales Invoice</div>
+<div class="col-sm-4">
+  <select id="pharmacyInDynamicInvoice" name="pharmacyInInvoice" (change)="selectChangeHandler($event)">
+    <option>--Select Pharmacy--</option>
+    <option *ngFor="let names of apiservice.pharmaname" value={{names}}>
+        {{names.pharmacyName}}
+    </option>
+  </select>
+</div>
+<div class="col-sm-4" style="margin-top: 6px;">
+  <input name="drugNameDynamicInvoice" placeholder="Search Drug" data-ng-model="drugNameDynamicInvoice" id="drugNameDynamicInvoice" data-ng-keyup="autodisplayDrugNamesinInvoice(drugNameDynamicInvoice, '')" required="" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" aria-invalid="true"><div class="md-errors-spacer"></div>
+  <!-- ngIf: checkFlag === 'false' -->
+  <div><input name="pharmacyTINHidden" data-ng-model="pharmacyTINHidden" id="pharmacyTINHidden" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+  </div>
+  <div><input name="addlGstType" data-ng-model="addlGstType" id="addlGstType" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Pharmacy Orders</h2>
+        <div class="dataTable_wrapper">
+            <table class="table table-bordered">
+              <thead>
+                <tr class="egp-headerbold">
+                    <th style="text-align: -webkit-right;">#</th>
+                      <th>Drug Name</th>
+                      <th>Qty to be Supplied</th>
+                      <th>Free</th>
+                      <th>Sale Rate</th>
+                      <th>Batch</th>
+                      <th>MRP</th>
+                      <th>GST%</th>
+                      <th>Tax On</th>
+                      <th>Mfg/Mkt</th>
+                      <th>Disc%</th>
+                      <th>Scheme Value</th>
+                      <th>Total</th>
+                      <th></th>
+                      <th></th>
+
+                </tr>
+              </thead>
+              <tbody>
+              <!-- ngIf: janitramListArr.length ==0 -->
+                <!-- ngRepeat: janitramDataObj in janitramListData track by $index -->
+                <th style="text-align: -webkit-right;" class="ng-binding">1</th>
+                        <td  class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+                        <td class="ng-binding"></td>
+
+
+                        <!-- <td data-ng-if="purchaseOrderObj.poStatus=='A'" class="ng-scope">Approved</td>  -->
+                        <!-- <td style="text-align: center;"><a data-ng-click="viewInvoice(invoiceDataObj)" id="2610"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td> -->
+                      
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>

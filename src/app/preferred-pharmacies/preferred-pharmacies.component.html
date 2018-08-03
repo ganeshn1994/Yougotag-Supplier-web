@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Setup &gt;&gt; Preferred Pharmacies</div>
+<div class="preferred">
+    <div class="row">
+        <div class="col-sm-4">
+        
+            <select name="pharmacyInPrefferd" data-ng-model="pharmacyInPrefferd" id="pharmacyInPrefferd" data-ng-init="pharmacyInPrefferd =''" style="width: 100%;"  class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+              <option value="">--Select Pharmacy--</option>
+            </select>
+            <strong style="color: red; margin-left:10px;" class="ng-binding"></strong>
+          
+          
+        </div>
+        <div class="col-sm-3"><button type="submit" class="btn btn-primary" style="margin-top:5px;">+</button></div>
+      </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Purchase Invoice	(Inward)</h2>
+          <div class="dataTable_wrapper">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="egp-headerbold">
+                    <th style="width: 55px;text-align: -webkit-right;">#</th>
+                    <th>Pharmacy</th>
+                    <th>Address</th>
+                    <th>State</th>
+                    <th>City</th>
+                    <th>Area</th>
+                    <th style="text-align: -webkit-right;">Contact</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ngRepeat: prefferrdPharmacyDataObj in prefferrdPharmacyListArr track by $index --><tr data-ng-repeat="prefferrdPharmacyDataObj in prefferrdPharmacyListArr track by $index" class="egp-word-wrap egp-black ng-scope">
+                    <td style="width: 55px;text-align: -webkit-right;" class="ng-binding">1</td>
+                    <td hidden="true" class="ng-binding">368</td>
+                    <td class="ng-binding">***MEDICINE POINT</td>
+                    <td class="ng-binding">#10, SY.NO. 34/2, GROUND FLOOR</td>
+                    <td class="ng-binding">KA</td>
+                    <td class="ng-binding">Bangalore</td>
+                    <td class="ng-binding">Yelahanka</td>
+                    <td style="text-align: -webkit-right;" class="ng-binding">9844865477</td>
+                    <th style="text-align: center;"><a data-toggle="modal" data-target="#deletePrefferrd" data-ng-click="deletePrefferrdData(prefferrdPharmacyDataObj)" id="368"><abbr title="Delete" class="egp-border-bottom"><i class="fa fa-trash egp-font24"></i></abbr></a></th>
+                  </tr><!-- end ngRepeat: prefferrdPharmacyDataObj in prefferrdPharmacyListArr track by $index -->
+                  <!-- end ngRepeat: prefferrdPharmacyDataObj in prefferrdPharmacyListArr track by $index -->
+                  
+                </tbody>
+              </table>
+              
+            </div>
+        </div>
+        </div>
+        </div>  

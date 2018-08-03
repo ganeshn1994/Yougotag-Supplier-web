@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Manage Payments</div>
+<div class="debit">
+  <div class="row">
+      <div class="col-sm-5">
+          <select name="pharmacyInDynamicInvoice" data-ng-model="pharmacyInDynamicInvoice" id="pharmacyInDynamicInvoice" data-ng-init="pharmacyInDynamicInvoice =''" data-ng-change="checkDrugLicenceExpiry(pharmacyInDynamicInvoice)" class="ng-valid ng-dirty ng-valid-parse ng-touched" aria-invalid="false">
+            <option value="" disabled="" selected="">--Select Pharmacy--</option>
+            <!-- ngRepeat: pharmacyInDynamicInvoice in prefferrdPharmacyListArr track by $index --><option selected="true" data-ng-repeat="pharmacyInDynamicInvoice in prefferrdPharmacyListArr track by $index" value="368" class="ng-binding ng-scope">***MEDICINE POINT + </option><!-- end ngRepeat: pharmacyInDynamicInvoice in prefferrdPharmacyListArr track by $index -->
+          </select>
+          <!-- ngIf: stockFlag === 'pharmacy' -->
+          <!-- ngIf: expiredLicense === 'true' -->
+        </div>
+  </div> 
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Manage Payments</h2>
+            <div class="panel-body egp-panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class="egp-headerbold">
+                          <th style="text-align: -webkit-right;">#</th>
+                          <th>Pharmacy</th>
+                          <th style="text-align: -webkit-right;">Contact Number</th>
+                          <th style="text-align: -webkit-right;">Number of Debit Notes</th>
+                          <th style="text-align: -webkit-right;">Value</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- ngRepeat: debitnoteobj in debitNotesArr track by $index -->
+                        <tr data-ng-show="debitNotesArr.length == 0" aria-hidden="false" class="">
+                              <td colspan="10" style="color: black;text-align: center;">
+                                    No data available.                
+                              </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                    <!-- <pagination data-num-pages="Pages()" data-max-size="maximumCount" data-current-page="currentPageNumber" data-boundary-links="true" on-select-page="pageSelected(page)"></pagination> -->
+                  </div>
+             </div>
+             </div>
+             </div>
+             </div> 

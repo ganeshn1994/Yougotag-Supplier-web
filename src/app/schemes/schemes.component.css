@@ -1,0 +1,43 @@
+i.fa.fa-search.left-icon {
+    position: absolute;
+    left: 10px;
+    top: 11px;
+}
+
+input#schemedrugname {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding-left: 31px;
+    padding-right: 30px;
+    color: black;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+}
+
+i.fa.fa-close.right-icon {
+    position: absolute;
+    /* right: 46px; */
+    left: 34%;
+    top: 13px;
+    cursor: pointer;
+}
+
+button.btn.btn-primary {
+    background: #009688 !important;
+}
+
+.scheme{
+    padding: 19px;
+}
+
+
+.card {
+    box-shadow: 1px #000;
+    border-radius: 0px;
+    border: none;
+    box-shadow: 0px 6px 9px 8px rgba(0, 0, 0, 0.1);
+}
+h3.card-title {
+    padding: 10px 20px;
+}

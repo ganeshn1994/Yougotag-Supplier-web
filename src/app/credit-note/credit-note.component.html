@@ -1,0 +1,70 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Credit Notes History</div>
+<div class="credit">
+  <div class="row">
+      <div class="col-sm-2">
+          
+            <select id="pharmacyInInvoice" name="pharmacyInInvoice" data-ng-model="pharmacyInInvoice" data-ng-init="pharmacyInInvoice =''" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+              <option value="">--Select Pharmacy--</option>
+                
+            </select>
+            <label data-ng-model="pharmacyerrmsg" class="ng-pristine ng-untouched ng-valid" aria-invalid="false"></label>
+          
+      </div>
+      <div class="col-sm-2">
+          <div class="input-group">
+              <input class="form-control ng-pristine ng-valid ng-touched" data-ng-model="startDateInInvoice" id="startDate" type="text" placeholder="Start Date" data-provide="datepicker" aria-invalid="false">
+              <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+            </div>
+          <div class="egp-errorClass-color ng-binding"></div>
+      </div>  
+      <div class="col-sm-2">
+          <div class="input-group">
+            <input class="form-control ng-pristine ng-valid ng-touched" data-ng-model="endDateInInvoice" id="endDate" type="text" placeholder="End Date" data-provide="datepicker" aria-invalid="false">
+            <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+          </div>
+          <div class="egp-errorClass-color ng-binding"></div>
+        </div>
+        <div class="col-sm-2">
+     
+              <button type="submit" class="btn btn-primary">Search</button>
+              &nbsp;&nbsp;&nbsp;
+              <button type="reset" class="btn btn-danger egp-button-width" data-ng-click="clearCreditNoteSearch()">Clear</button> <br>
+           
+        </div>
+  </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Pharmacy Orders</h2>
+          <div class="dataTable_wrapper">
+              <table class="table table-bordered">
+                <thead>
+                <tr class="egp-headerbold">
+                  <th style="text-align: -webkit-right;">#</th>
+                  <th>Credit Note Date</th>
+                  <th>Credit Note Number</th>
+                  <th>Pharmacy</th>
+                  <th style="text-align: -webkit-right;">Returned Amount</th>
+                  <th style="text-align: -webkit-right;">Return Charges</th>
+                  <th style="text-align: -webkit-right;">Credit Amount</th>
+                  <th style="text-align: -webkit-right;">Value Used</th>
+                  <th style="text-align: -webkit-right;">Available Amount</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- ngRepeat: creditHisObj in creditHisArr track by $index -->
+                <tr data-ng-show="creditHisArr.length==0" aria-hidden="false" class="">
+                  <td colspan="10" style="color: black;text-align: center;">
+                    No data available.
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+     
+            </div>
+        </div>
+        </div>
+        </div>

@@ -1,0 +1,68 @@
+<app-navbar></app-navbar>
+<div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Approve Payments</div>
+<div class="approve">
+  <div class="row">
+      <div class="col-sm-5">
+          <select name="pharmacyInDynamicInvoice" data-ng-model="pharmacyInDynamicInvoice" id="pharmacyInDynamicInvoice" data-ng-init="pharmacyInDynamicInvoice =''" data-ng-change="checkDrugLicenceExpiry(pharmacyInDynamicInvoice)" class="ng-valid ng-dirty ng-valid-parse ng-touched" aria-invalid="false">
+            <option value="" disabled="" selected="">--Select Pharmacy--</option>
+            <!-- ngRepeat: pharmacyInDynamicInvoice in prefferrdPharmacyListArr track by $index --><option selected="true" data-ng-repeat="pharmacyInDynamicInvoice in prefferrdPharmacyListArr track by $index" value="368" class="ng-binding ng-scope">***MEDICINE POINT + </option><!-- end ngRepeat: pharmacyInDynamicInvoice in prefferrdPharmacyListArr track by $index -->
+          </select>
+          <!-- ngIf: stockFlag === 'pharmacy' -->
+          <!-- ngIf: expiredLicense === 'true' -->
+        </div>
+        <div class="col-sm-2">
+      
+            <button type="submit" class="btn btn-primary">Search</button>
+            &nbsp;&nbsp;&nbsp;
+            <button type="reset" class="btn btn-danger egp-button-width" data-ng-click="clearApprovedPaymentsData()">Clear</button> <br>
+          
+        </div>
+  </div>
+
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Approve Payments</h2>
+            <div class="panel-body egp-panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class="egp-headerbold">
+                          <th style="text-align: -webkit-right;">#</th>
+                          <th>Payment Date</th>
+                          <th>Payment Mode</th>
+                          <th>Payment Status</th>
+                          <th>Instrument Ref Number</th>
+                          <th>Pharmacy</th>
+                          <!--<th>Field Agent</th>-->
+                          <th style="text-align: -webkit-right;">Paid Amount</th>
+                          <th>Remarks</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- ngRepeat: raisedPaymentsObj in approvedPayments track by $index --><tr class="egp-word-wrap egp-black ng-scope" data-ng-show="approvedPayments.length !=0" data-ng-repeat="raisedPaymentsObj in approvedPayments track by $index" aria-hidden="false">
+                          <td style="text-align: -webkit-right;" class="ng-binding">1</td>
+                          <td class="ng-binding">25-06-2018</td>
+                          <td class="ng-binding">Cash</td>
+                          <th class="ng-binding">Raised</th>
+                          <td class="ng-binding"></td>
+                          <td class="ng-binding">***MEDICINE POINT</td>
+                          <!--<th>{{raisedPaymentsObj.fieldAgentLoginName}}</th>-->
+                          <td style="text-align: -webkit-right;" class="ng-binding">221.48</td>
+                          <th class="ng-binding"></th>
+                          <th style="text-align: center;">
+                              <a data-toggle="modal" data-target="#viewPaymentDetails" data-backdrop="static" data-keyboard="false" data-ng-click="fetchPaymentDetailsById(raisedPaymentsObj)"><abbr title="View" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a>
+                          </th>
+                        </tr><!-- end ngRepeat: raisedPaymentsObj in approvedPayments track by $index --><tr class="egp-word-wrap egp-black ng-scope" data-ng-show="approvedPayments.length !=0" data-ng-repeat="raisedPaymentsObj in approvedPayments track by $index" aria-hidden="false">
+                         
+                      </tbody>
+                    </table>
+                    
+                  </div>
+            </div>
+            </div>
+            </div>
+            </div>  
+  
+</div>
