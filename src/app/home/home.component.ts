@@ -19,10 +19,10 @@ export class HomeComponent implements OnInit {
   enddate:any;
   
   constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
-    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'DD/MM/YYYY'});
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     var date = new Date();
-    this.enddate = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
-    this.startdate = ('01')+ '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+    this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
+    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
 
   }
   ngOnInit(){
