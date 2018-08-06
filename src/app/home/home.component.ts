@@ -4,6 +4,8 @@ import { ApiService } from '../api.service'
 import { CookieService } from 'ngx-cookie-service';
 import { HttpHeaders } from '@angular/common/http';
 import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
+import {PaginatorModule} from 'primeng/paginator';
+
 
 
 @Component({
@@ -56,9 +58,9 @@ export class HomeComponent implements OnInit {
    getInvoice(){
      this.apiservice.getInvoice();
    }
-   search(){
-     this.apiservice.search();
-   }
+  //  search(){
+  //    this.apiservice.search();
+  //  }
    getInvoiceId(invoicenum){
      this.apiservice.getInvoiceId(invoicenum);
      this.getDetailsid()

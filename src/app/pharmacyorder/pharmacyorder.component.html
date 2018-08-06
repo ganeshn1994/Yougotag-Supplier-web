@@ -63,16 +63,16 @@
                             </tr>
                           </thead>
                           <tbody>
-                          <!-- ngIf: janitramListArr.length ==0 -->
-                            <!-- ngRepeat: janitramDataObj in janitramListData track by $index -->
+                            <tr *ngFor="let poinvoice of apiservice.polist">
+
                             <th style="text-align: -webkit-right;" class="ng-binding">1</th>
-                                    <td  class="ng-binding">EGP/PO/2018-19/00000087</td>
-                                    <td class="ng-binding">13/07/2018 17:09:47</td>
-                                    <td class="ng-binding">EGANGAA PHARMACY</td>
-                                    <td class="ng-binding"></td>
-                                    <td data-ng-if="purchaseOrderObj.poStatus=='A'" class="ng-scope">Approved</td> 
-                                    <td style="text-align: center;"><a data-ng-click="viewInvoice(invoiceDataObj)" id="2610"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td>
-                                  
+                                    <td  class="ng-binding">{{poinvoice.poNumber}}</td>
+                                    <td class="ng-binding">{{poinvoice.poDate}}</td>
+                                    <td class="ng-binding">{{poinvoice.pharmacyName}}</td>
+                                    <td class="ng-binding">{{poinvoice.fieldAgentId}}</td>
+                                    <td *ngIf="poinvoice.poStatus=='A'" class="ng-scope">Approved</td> 
+                                    <td style="text-align: center;"><a (click)="viewInvoice(poinvoice.pharmacyId,poinvoice.poNumber)" data-toggle="modal" data-target="#viewInvoice"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td>
+                             </tr>     
                           </tbody>
                         </table>
                       </div>
@@ -142,5 +142,61 @@
                   </div>
                   
                 </div>
+                <div class="container">
+                                 
+                  <!-- Modal -->
+                  <div class="modal fade" id="viewInvoice" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">PO Details</h4>
+                        </div>
+                        <div class="modal-body">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <b>pharmacyName:</b>{{apiservice.pname}}
+                          </div>
+                          <div class="col-md-4">
+                            <b>PO Number:</b>{{apiservice.ponumber}}
+                          </div>
+                          <div class="col-md-4">
+                            <b>PO Date:</b>{{apiservice.poDate}}
+                          </div>
+                        </div>
+                        <br>
+                            <div class="dataTable_wrapper viewinvoice">
+                                <table class="table table-bordered">
+                                  <thead>
+                                    <tr class="egp-headerbold">
+                                        <th style="text-align: -webkit-right;">#</th>
+                                        <th>Drug Name</th>
+                                        <th>Qty Available</th>
+                                        <th>Qty Ordered</th>  
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr *ngFor="let po of apiservice.polistbyId ">
+                                    <th style="text-align: -webkit-right;" class="ng-binding">{{po.id}}</th>
+                                            <td hidden="true" class="ng-binding">{{po.supplierId}}</td>
+                                            <td class="ng-binding">{{po.tradeCompositeId}}</td>
+                                            <td class="ng-binding">{{po.quantityAvailable}}</td>
+                                            <td class="ng-binding">{{po.quantityOrdered}}</td>                                        
+                                          </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                          </div>
+                         
+                        <div class="modal-footer">
+                          <button class="ui-button-raised ui-button-danger" pButton type="button" (click)="rejectPo()" label="Reject PO" ></button>
+                          <button class="ui-button-raised ui-button-success" pButton type="button" (click)="generatePo(apiservice.polist.tradeCompositeId,apiservice.polist.quantityOrdered)" label="Generate" ></button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
                 
 

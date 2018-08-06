@@ -11,6 +11,10 @@ import {I3} from '../app/Interceptor/Authinterceptor.service';
 import { CookieService } from 'ngx-cookie-service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {ButtonModule} from 'primeng/button';
+import {PaginatorModule} from 'primeng/paginator';
+import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
+import {MenuItem} from 'primeng/api';
 
 
 
@@ -116,7 +120,10 @@ const routes :Routes= [
     MatDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+     PaginatorModule,
+     ButtonModule,
+     AccordionModule
   ],
   providers: [ApiService,CookieService ,
   //   {  provide: HTTP_INTERCEPTORS,

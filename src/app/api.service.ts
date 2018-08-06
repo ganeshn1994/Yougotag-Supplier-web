@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import {  HttpClient,HttpHeaders,HttpInterceptor,HttpHandler,  HttpRequest,  HttpResponse,  HttpEvent,  HttpEventType,  HttpParams } from '@angular/common/http'
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpHeaders, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpEvent, HttpEventType, HttpParams } from '@angular/common/http'
+import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { reject } from 'q';
 import { environment } from '../app/config'
-import {  RequestOptions, BaseRequestOptions, RequestOptionsArgs } from '@angular/http';
+import { RequestOptions, BaseRequestOptions, RequestOptionsArgs } from '@angular/http';
+import { InputTextModule } from 'primeng/inputtext';
+import { parse } from 'url';
 
 
 
@@ -15,129 +17,141 @@ import {  RequestOptions, BaseRequestOptions, RequestOptionsArgs } from '@angula
 })
 export class ApiService {
 
- 
-  url:string;
-  token:string;
+
+  url: string;
+  token: string;
   data: any = [];
-  payload: any ;
-  startdate:any;
-  enddate:any;
-  status:any;
-  paymentStatus:any;
+  payload: any;
+  startdate: any;
+  enddate: any;
+  status: any;
+  paymentStatus: any;
+  supplierid:any;
   pharmaname = [];
   invoicelist = [];
   invoicenum = [];
   tenantList = [];
-  tenantid:any = [];
+  tenantid: any = [];
   tenantname = [];
-  loginid:any;
-  authToken:any;
-  saledetails:any = [];
-  pharmacyname:any;
-  ponumber:any;
-  invnum:any;
-  totalunitamt:any;
-  totalgstamt:any;
-  gsttype:any;
+  loginid: any;
+  authToken: any;
+  saledetails: any = [];
+  pharmacyname: any;
+  ponumber= [];
+  invnum: any;
+  totalunitamt: any;
+  totalgstamt: any;
+  gsttype: any;
+  polist:any = [];
+  selectedpharma:any;
+  pid = [];
+  pnum = [];
+  pname:any;
+  poDate:any;
+  poNumber:any;
+  polistbyId = [];
+  tci:any;
+  qo:any;
+
+  loginData = {
+    deviceId: Date.now()
+  }
+  detailsBOList ={
+    detailsBOList:[{
+      tradeCompositeId:this.tci,
+      quantityOrdered:this.qo
+    }]
+  } 
 
 
   baseUrl = environment.baseUrl;
   serviceUrl = environment.serviceUrl;
 
-  loginData = {
-    deviceId : Date.now()
-  }
   
- 
-  constructor(private httpClient: HttpClient, public router:Router) {
+
+
+  constructor(private httpClient: HttpClient, public router: Router) {
 
   }
 
-
-  
-
-   public getToken(): string {
+  public getToken(): string {
     return localStorage.getItem('authToken');
   }
 
-  search(){
-    console.log("startdate:" + this.startdate);
-    console.log("status" + status)
+  
+
+  login(loginData) {
+
+    let url = this.baseUrl + '/egangaa-portal/login';
+    return this.httpClient.post(url, loginData).subscribe((data: any) => {
+      if (data.messages == "User credentials do not match!") {
+        data.token = null;
+        console.log('username wrong')
+      } else {
+        let authToken = data.authToken;
+        this.loginid = data.payload.data;
+        let deviceId: any = this.loginData.deviceId;
+        this.authToken = data.authToken;
+      }
+    })
   }
-   
-   login(loginData){
-   
-     let url = this.baseUrl + '/portal/login';
-     return this.httpClient.post(url,loginData).subscribe((data : any)=>{
-     if(data.messages == "User credentials do not match!"){
-       data.token = null;
-       console.log('username wrong')
-     }else{
-       let authToken = data.authToken;
-      //  console.log("authToken:" + authToken)
-       this.loginid  = data.payload.data;
-       let deviceId:any = this.loginData.deviceId;
-       this.authToken = data.authToken;
-       
-      //  this.router.navigate(['home'])
-          }     
-      })
-   }
-   getdetails(){
-     let deviceId = sessionStorage.getItem('deviceId');
-       sessionStorage.setItem('authToken',this.authToken);
-       sessionStorage.setItem('loginId',this.loginid);
-     let url= this.serviceUrl + "/tenants/webrole?null&_" + deviceId; //original api
-     this.httpClient.get(url).subscribe((data : any)=>{
-       let webrole = JSON.parse(data.payload);
-       let tenantList = webrole.tenantRolesList;
-       this.tenantList = tenantList;
-      for(let i=0;i<tenantList.length;i++){
+  getdetails() {
+    let deviceId = sessionStorage.getItem('deviceId');
+    sessionStorage.setItem('authToken', this.authToken);
+    sessionStorage.setItem('loginId', this.loginid);
+    let url = this.serviceUrl + "/tenants/webrole?null&_" + deviceId; //original api
+    this.httpClient.get(url).subscribe((data: any) => {
+      let webrole = JSON.parse(data.payload);
+      console.log('webrole:' + webrole);
+      let tenantList = webrole.tenantRolesList;
+      this.tenantList = tenantList;
+      for (let i = 0; i < tenantList.length; i++) {
         this.tenantid = tenantList[i].tenantId;
         let tenantid = this.tenantid;
-        console.log("tenantidlist:"  + tenantid);
+        console.log("tenantidlist:" + tenantid);
       }
-     })
-   }
+    })
+  }
 
-   getSession(){
-     let deviceId = localStorage.getItem('deviceId');
-     console.log("deviceId:" + deviceId); 
-     let url = this.serviceUrl + "/suppliers/sessionvariables?null&_=" + deviceId;
-     this.httpClient.get(url).subscribe((data : any)=>{
-       console.log('sessionvariables:' + JSON.stringify(data));
-     })
-   }
+  getSession() {
+    let deviceId = localStorage.getItem('deviceId');
+    console.log("deviceId:" + deviceId);
+    let url = this.serviceUrl + "/suppliers/sessionvariables?null&_=" + deviceId;
+    this.httpClient.get(url).subscribe((data: any) => {
+      console.log('sessionvariables:' + JSON.stringify(data));
+    })
+  }
 
-   getInvoice(){
+  getInvoice() {
     let deviceId = sessionStorage.getItem('deviceId');
     console.log('deviceId:' + deviceId);
     let url = this.serviceUrl + "/invoice/suppliers/pharmacies/invoices/list?offset=0&size=10&sdate=2018-08-01&edate=2018-08-02&null&_=" + deviceId;
-    // let url = './assets/json/invoices.json';
-    return this.httpClient.get(url).subscribe((data:any)=>{
+    return this.httpClient.get(url).subscribe((data: any) => {
       let invoicedata = JSON.parse(data.payload);
       let invoicelist = invoicedata.supplierInvoiceHeadersArrayListBO
       this.invoicelist = invoicelist;
-      //  for(let i=0;i<invoicelist.length;i++){
-      //   this.invoicenum = invoicelist[i].invoiceNumber;
-      //   let invoicenum = this.invoicenum;
-      //   console.log("invoicelist:" + this.invoicenum);
-      // }
-
+      let supplierid = invoicelist.supplierId;
+      for(let i = 0;i<invoicelist.length; i++){
+        let supplierid = invoicelist[i].supplierId;
+        console.log("supplierid:" + supplierid);
+        sessionStorage.setItem('supplierid' , supplierid );
+      }
     })
-   }
+  }
 
-   getInvoiceId(invoicenum:any){
+  getInvoiceId(invoicenum: any) {
     this.invoicenum = invoicenum;
-    // console.log("invoiceid:" + invoicenum);
-   }
+  }
 
-   getDetailsid(){
+  
+ 
+
+  getDetailsid() {
     let deviceId = sessionStorage.getItem('deviceId');
-     let invoicenum = this.invoicenum;
-     console.log("invoiceid:" + invoicenum);
+    let invoicenum = this.invoicenum;
+    console.log("invoiceid:" + invoicenum);
     let url = this.serviceUrl + "/invoice/suppliers/pharmacies/invoices/details?inum=" + invoicenum + "&null&_=" + deviceId;
-    return this.httpClient.get(url).subscribe((data:any)=>{
+    return this.httpClient.get(url).subscribe((data: any) => {
       let saledetaillist = JSON.parse(data.payload);
       let saledetails = saledetaillist.supplierInvoiceDetailsBOs;
       let pharmacyName = saledetaillist.pharmacyName;
@@ -151,65 +165,115 @@ export class ApiService {
       this.totalgstamt = gstamt;
       this.invnum = invnum;
       this.ponumber = ponum;
+      console.log("pnum" + ponum);
       this.pharmacyname = pharmacyName;
-      console.log("pharmacyName:" + pharmacyName); 
+      console.log("pharmacyName:" + pharmacyName);
       this.saledetails = saledetails;
-    
 
-     
+
+
     })
-   }
-   getpharma(){
+  }
+
+
+  getpharma() {
 
     let deviceId = sessionStorage.getItem('deviceId')
     console.log("authTokenfromstorage:" + localStorage.getItem('authToken'));
-    console.log("deviceId:"  + deviceId)
+    console.log("deviceId:" + deviceId)
     let url = this.serviceUrl + "/suppliers/preferred/pharmacies/details?null&_=" + deviceId;
-    // let url = './assets/json/pharmacieslist.json'
-    return this.httpClient.get(url).subscribe((data : any)=>{
+    return this.httpClient.get(url).subscribe((data: any) => {
       let jsonObj = JSON.parse(data.payload);
-      console.log("jsonObj:"+jsonObj);
       let prefferrdPharmacyData = jsonObj.pharmaciesList;
       this.pharmaname = prefferrdPharmacyData;
-      console.log("pharamaname:" + JSON.stringify(this.pharmaname));
-  
     })
-   }
-  
+  }
 
-   getTenantId(){ 
+
+  getTenantId() {
     console.log("tenantid:" + this.tenantid);
-    localStorage.setItem('tenantid',this.tenantid);
+    localStorage.setItem('tenantid', this.tenantid);
     this.router.navigate(['home']);
-    
+  }
+
+
+//PURCHASE ORDER API's
+   pharmacyorder(){
+     let supplierid = sessionStorage.getItem('supplierid');
+     let url = this.serviceUrl + "/po/orders/list?size=10&offset=0&sid="+ supplierid +"&sdate=2018-08-01&edate=2018-08-06&null&_=1531812026726"
+      this.httpClient.get(url).subscribe((data:any)=>{
+        let jsonObj = JSON.parse(data.payload)
+        let polist = jsonObj.purchaseOrderHeaderBO;
+        this.polist = polist;
+       
+      }) 
    }
 
-  //  pharmacyorder(){
-  //    let url = this.serviceUrl + "/po/orders/list?size=10&offset=0&sid=2610&sdate=2018-07-01&edate=2018-07-17&null&_=1531812026726"
-  //     this.httpClient.get(url).subscribe(data=>{
-  //       console.log("pharmacy" + data);
-  //     }) 
-  //  }
+   pobyId(pid:any,pnum:any){
+    this.pid = pid; 
+    console.log("pid:" + this.pid);
+    this.pnum = pnum;
+    console.log("pnum:" + this.pnum);
+  }
 
-   //search
-   displayPOList(pharmacyid,status,startdate,enddate){
-     console.log('search');
-   }
 
-   logout(){
-     return new Promise((resolve,reject)=>{
-      let deviceId = localStorage.getItem('deviceId');
-      let url= this.baseUrl + "/services/users/logout?null&_=" + deviceId;
+  displaypobyId(){
+    let url = this.serviceUrl + "/po/orders/details?pid=" + this.pid + "&pnum=" + this.pnum;
+    return this.httpClient.get(url).subscribe((data:any)=>{
+      let jsonObj = JSON.parse(data.payload);
+      console.log('jsonObj:' + JSON.stringify(jsonObj));
+      let polist = jsonObj.purchaseOrderDetailBO;
+      let poNumber = jsonObj.poNumber;
+      let poDate = jsonObj.poDate;
+      let pharmacyName = jsonObj.pharmacyName;
+      this.polistbyId = polist;
+      this.pname = pharmacyName;
+      this.poDate = poDate;
+      this.ponumber = poNumber;
+      for(let i = 0;i<polist.length;i++){
+      this.tci = polist[i].tradeCompositeId;
+      this.qo = polist[i].quantityOrdered;
+      let tci =this.tci;
+      let qo = this.qo;
+    console.log('tci:' + tci);
+    console.log('qo:' + qo);
+    sessionStorage.setItem('tci',tci);
+    sessionStorage.setItem('qo',qo);
+
+
+    }
       
-       this.httpClient.get(url).subscribe(data=>{
+    })
+  }
+  generatePo() {
+
+    let url = this.serviceUrl + '/suppliers/potoinvoice';
+    return this.httpClient.post(url,this.detailsBOList).subscribe((data: any) => {
+      let jsonObj = JSON.parse(data.payload);
+      console.log("jsonObj:" + JSON.stringify(jsonObj));
+        })
+      }
+  //search
+  displayPOList(pharmacyid, status, startdate, enddate) {
+    console.log('search');
+  }
+
+ 
+
+  logout() {
+    return new Promise((resolve, reject) => {
+      let deviceId = localStorage.getItem('deviceId');
+      let url = this.baseUrl + "/services/users/logout?null&_=" + deviceId;
+
+      this.httpClient.get(url).subscribe(data => {
         localStorage.clear();
         sessionStorage.clear();
         this.router.navigateByUrl('/')
-       },(err)=>{
-         reject(err);
-       
-       })
-     })
-   }
+      }, (err) => {
+        reject(err);
+
+      })
+    })
+  }
 }
 

@@ -43,6 +43,13 @@ input#enddate{
     border: solid 1px rgba(255, 255, 255, 0.3);
 }
 
+.modal-header {
+    padding: 15px 15px !important;
+    background: #009688;
+    color: #ffffff;
+    border-radius: 5px 5px 0 0;
+}
+
 select#postatus {
     height: 3em;
     font-weight: 400;
