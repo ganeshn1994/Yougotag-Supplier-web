@@ -45,6 +45,8 @@ import { PreferredPharmaciesComponent } from './preferred-pharmacies/preferred-p
 import { SchemesComponent } from './schemes/schemes.component';
 import { KnowYourMedicineComponent } from './know-your-medicine/know-your-medicine.component';
 import { JanitramComponent } from './janitram/janitram.component';
+import {InputTextModule} from 'primeng/inputtext';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 
 
@@ -114,7 +116,9 @@ const routes :Routes= [
     MatSidenavModule,
     MatDatepickerModule,
     FormsModule,
-     ReactiveFormsModule
+     ReactiveFormsModule,
+     InputTextModule,
+     DlDateTimePickerDateModule
   ],
   providers: [ApiService,CookieService ,
   //   {  provide: HTTP_INTERCEPTORS,

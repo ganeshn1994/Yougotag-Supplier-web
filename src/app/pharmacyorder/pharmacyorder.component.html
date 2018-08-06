@@ -63,16 +63,16 @@
                             </tr>
                           </thead>
                           <tbody>
-                          <!-- ngIf: janitramListArr.length ==0 -->
-                            <!-- ngRepeat: janitramDataObj in janitramListData track by $index -->
+                            <tr *ngFor="let poinvoice of apiservice.polist">
+
                             <th style="text-align: -webkit-right;" class="ng-binding">1</th>
-                                    <td  class="ng-binding">EGP/PO/2018-19/00000087</td>
-                                    <td class="ng-binding">13/07/2018 17:09:47</td>
-                                    <td class="ng-binding">EGANGAA PHARMACY</td>
-                                    <td class="ng-binding"></td>
-                                    <td data-ng-if="purchaseOrderObj.poStatus=='A'" class="ng-scope">Approved</td> 
+                                    <td  class="ng-binding">{{poinvoice.poNumber}}</td>
+                                    <td class="ng-binding">{{poinvoice.poDate}}</td>
+                                    <td class="ng-binding">{{poinvoice.pharmacyName}}</td>
+                                    <td class="ng-binding">{{poinvoice.fieldAgentId}}</td>
+                                    <td *ngIf="poinvoice.poStatus=='A'" class="ng-scope">Approved</td> 
                                     <td style="text-align: center;"><a data-ng-click="viewInvoice(invoiceDataObj)" id="2610"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td>
-                                  
+                             </tr>     
                           </tbody>
                         </table>
                       </div>

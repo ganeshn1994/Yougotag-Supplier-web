@@ -9,7 +9,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 })
 export class PharmacyorderComponent implements OnInit {
 
-  selectedDay: any = '';
+  selectedDay: any = [];
   startdate:any = '';
   enddate:any = '';
   status:any = '';
@@ -20,17 +20,22 @@ export class PharmacyorderComponent implements OnInit {
   ngOnInit() {
     // this.apiservice.pharmacyorder();
     this.getpharma();
+    this.getpoorder();
   }
 
   selectChangeHandler(event: any) {
     //update the ui
     this.selectedDay = event.target.value;
-    console.log("selected:" + JSON.stringify(this.selectedDay));
+    console.log("selected:" + this.selectedDay);
   }
 
   getpharma(){
     this.apiservice.getpharma();
     
+  }
+
+  getpoorder(){
+    this.apiservice.pharmacyorder();
   }
 
   displayPOList(pharmacyid,status,startdate,enddate){

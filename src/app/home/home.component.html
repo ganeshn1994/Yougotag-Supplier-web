@@ -23,8 +23,8 @@
         <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
     </div>
     <div class="col-sm-2">
-        <select id="Status" name="Status" [(ngModel)]="status" ng-init="Status =''" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
-          <option value="">--Select Status--</option>
+        <select id="Status" name="Status" [(ngModel)]="status" ngInit="Status ='0'" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+          <option value="0">--Select Status--</option>
           <option value="A">Approved</option>
           <option value="P">Pending</option>
           <option value="RR">Rejection Raised</option>
@@ -120,6 +120,12 @@
           <div class="col-md-4">
             <b>Invoice Number:</b>{{apiservice.invnum}}
           </div>
+        </div>
+        <br>
+        <div class="row search">
+          <span class="ui-float-label">
+            <input  id="float-input" type="text" placeholder="Search Drug" size="30" pInputText> 
+        </span>
         </div>
             <div class="dataTable_wrapper viewinvoice">
                 <table class="table table-bordered">

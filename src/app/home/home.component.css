@@ -110,6 +110,14 @@ select#paymentStatus{
     border-color: #009688 !important;
     
 }
+.row.search {
+    padding-left: 63px;
+    margin-top: 26px;
+}
+input#float-input {
+    border: 0px;
+    border-bottom: 1px solid;
+}
 
 input.form-control.date.ng-untouched.ng-pristine.ng-valid {
     width: 80%;
