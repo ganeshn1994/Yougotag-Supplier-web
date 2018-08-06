@@ -17,8 +17,13 @@ export class HomeComponent implements OnInit {
   selectedDay: any = '';
   startdate:any;
   enddate:any;
+  
   constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'DD/MM/YYYY'});
+    var date = new Date();
+    this.enddate = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+    this.startdate = ('01')+ '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+
   }
   ngOnInit(){
     // this.apiservice.getSession();
