@@ -67,7 +67,7 @@ export class ApiService {
    
    login(loginData){
    
-     let url = this.baseUrl + '/egangaa-portal/login';
+     let url = this.baseUrl + '/portal/login';
      return this.httpClient.post(url,loginData).subscribe((data : any)=>{
      if(data.messages == "User credentials do not match!"){
        data.token = null;

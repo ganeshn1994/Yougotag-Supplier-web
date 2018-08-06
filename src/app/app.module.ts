@@ -10,6 +10,7 @@ import {I2} from '../app/Interceptor/Authinterceptor.service';
 import {I3} from '../app/Interceptor/Authinterceptor.service';
 import { CookieService } from 'ngx-cookie-service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 
 
@@ -114,7 +115,8 @@ const routes :Routes= [
     MatSidenavModule,
     MatDatepickerModule,
     FormsModule,
-     ReactiveFormsModule
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [ApiService,CookieService ,
   //   {  provide: HTTP_INTERCEPTORS,

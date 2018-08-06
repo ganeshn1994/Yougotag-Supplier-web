@@ -11,14 +11,14 @@
           </option>
         </select>
       </div>
-    <div class="col-sm-2">
-        <div class="input-group">
-          <input class="form-control ng-pristine ng-valid ng-touched" (change)="startdates($event)" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="Start Date" data-provide="datepicker" aria-invalid="false"> <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="Start Date">
         </div>
     </div>
     <div class="col-sm-2">
-        <div class="input-group">
-          <input class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="End Date" data-provide="datepicker" aria-invalid="false"> <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+        <div class="form-group">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="End Date">
         </div>
         <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
     </div>

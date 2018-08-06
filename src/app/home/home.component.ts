@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import { ApiService } from '../api.service'
 import { CookieService } from 'ngx-cookie-service';
 import { HttpHeaders } from '@angular/common/http';
+import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
 
 
 @Component({
@@ -12,12 +13,13 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   
-
+  datePickerConfig: Partial<BsDatepickerConfig>;
   selectedDay: any = '';
   startdate:any;
   enddate:any;
-  constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { }
-
+  constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'DD/MM/YYYY'});
+  }
   ngOnInit(){
     // this.apiservice.getSession();
     this.apiservice.getInvoice();
