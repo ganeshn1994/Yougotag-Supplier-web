@@ -168,7 +168,7 @@ input#startDateInCompanyReport,input#endDateInCompanyReport {
     outline: 0;
     padding: 0 1em;
     text-decoration: none;
-    width: 100%;
+    width: 84%;
 }
 
 span.input-group-addon.egp-span-backcolor {
@@ -185,4 +185,18 @@ span.input-group-addon.egp-span-backcolor {
 
 .row.date {
     margin-top: 14px;
+}
+
+.fa, .fab, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    position: relative;
+    left: 10;
+    left: 242px;
+    top: -30px;
 }
