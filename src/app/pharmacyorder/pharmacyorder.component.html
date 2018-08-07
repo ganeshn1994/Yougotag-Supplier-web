@@ -9,23 +9,23 @@
   </select>
 </div>
   <div class="col-sm-2">
-      <div class="input-group">
-        <input class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startdate" type="text" placeholder="Start Date" data-provide="datepicker" aria-invalid="false">
-        <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+      <div class="form-group">
+        <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text">
+        <i class="fa fa-calendar egp-font20"></i>
       </div>
       <div class="egp-errorClass-color ng-binding"></div>
     </div>
     <div class="col-sm-2">
-        <div class="input-group">
-          <input class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="enddate" type="text" placeholder="End Date" data-provide="datepicker" aria-invalid="false">
-          <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
+        <div class="form-group">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text">
+          <i class="fa fa-calendar egp-font20"></i>
         </div>
         <!-- <div data-ng-if="datevalidation === 'true'" class="egp-errorClass-color">{{datevalidation}}</div> -->
         <div class="egp-errorClass-color ng-binding"></div>
       </div>
       <div class="col-sm-2">
-         <select name="Status" id="postatus" [(ngModel)]="status" ng-init="Status =''" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
-            <option value="">--Select Status--</option>
+         <select name="Status" id="postatus" [(ngModel)]="Status" ng-init="Status =' '" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+            <option value=" ">--Select Status--</option>
             <option value="A">Approved</option>
             <option value="P">Pending</option>
             <option value="R">Rejected</option>

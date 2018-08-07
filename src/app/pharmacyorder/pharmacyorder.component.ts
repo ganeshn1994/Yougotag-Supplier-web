@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { pipeDef } from '../../../node_modules/@angular/core/src/view';
+import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
+import {Router} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pharmacyorder',
@@ -10,13 +13,21 @@ import { pipeDef } from '../../../node_modules/@angular/core/src/view';
 })
 export class PharmacyorderComponent implements OnInit {
 
-  selectedDay: any = [];
-  startdate:any = '';
-  enddate:any = '';
-  status:any = '';
+  datePickerConfig: Partial<BsDatepickerConfig>;
+  selectedDay: any = '';
+  startdate:any ;
+  enddate:any ;
+  paymentStatus =' ';
+  Status =' ';
 
   
-  constructor(private apiservice:ApiService) { }
+  constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+    var date = new Date();
+    this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
+    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
+
+  }
 
   ngOnInit() {
     // this.apiservice.pharmacyorder();
