@@ -12,19 +12,18 @@
           
       </div>
       <div class="col-sm-2">
-          <div class="input-group">
-              <input class="form-control ng-pristine ng-valid ng-touched" data-ng-model="startDateInInvoice" id="startDate" type="text" placeholder="Start Date" data-provide="datepicker" aria-invalid="false">
-              <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
-            </div>
-          <div class="egp-errorClass-color ng-binding"></div>
-      </div>  
-      <div class="col-sm-2">
-          <div class="input-group">
-            <input class="form-control ng-pristine ng-valid ng-touched" data-ng-model="endDateInInvoice" id="endDate" type="text" placeholder="End Date" data-provide="datepicker" aria-invalid="false">
-            <span class="input-group-addon egp-span-backcolor"><i class="fa fa-calendar egp-font20"></i></span>
-          </div>
-          <div class="egp-errorClass-color ng-binding"></div>
+        <div class="form-group">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" placeholder="Start Date" type="text">
+          <i	class="fa fa-calendar egp-font20"></i>
         </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" placeholder="End Date" type="text">
+          <i	class="fa fa-calendar egp-font20"></i>
+        </div>
+        <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
+    </div>
         <div class="col-sm-2">
      
               <button type="submit" class="btn btn-primary">Search</button>
