@@ -23,6 +23,12 @@ i.fa.fa-search.left-icon {
     top: 11px;
 }
 
+i.fa.fa-calendar.egp-font20 {
+    float: right;
+    margin-top: -29px;
+    margin-right: 14px;
+}
+
 select#group {
     height: 3em;
     font-weight: 400;
@@ -64,7 +70,7 @@ input#gststartdate,input#gstenddate {
     outline: 0;
     padding: 0 1em;
     text-decoration: none;
-    width: 100%;
+    width: 79%;
 }
 
 span.input-group-addon.egp-span-backcolor {
