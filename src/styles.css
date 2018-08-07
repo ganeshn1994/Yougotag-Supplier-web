@@ -15,5 +15,11 @@
 /* body{
     background-color: #009688 !important;
 } */
-
+.bs-datepicker-head {
+    min-width: 270px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 3px 3px 0 0;
+    text-align: center;
+}
 
