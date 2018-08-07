@@ -62,7 +62,7 @@ input#suppliedwhen {
     /* outline: 0; */
     padding: 0 1em;
     text-decoration: none;
-    width: 100%;
+    width: 200px;
     height: 3em;
     /* margin-top: 15px; */
 }
@@ -171,4 +171,15 @@ td.ng-binding {
 
 label.egp-color-black {
     margin-top: 35px;
+}
+.fa, .fab, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    position: relative;
+    top: 10px;
 }

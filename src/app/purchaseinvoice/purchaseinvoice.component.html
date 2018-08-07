@@ -17,11 +17,9 @@
     </div>
     <div class="col-lg-4 ">
       <div class="input-group" style="width: 80%;">
-        <input class="" [(ngModel)]="invoicedate" type="text" id="suppliedwhen">
-        <span class="input-group-addon egp-span-backcolor">
-          <i class="fa fa-calendar egp-font20"></i>
-        </span>
-      </div>
+        <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="invoicedate" id="suppliedwhen" placeholder="Invoice Date" type="text" >
+                  <i class="fa fa-calendar egp-font20"></i>
+        </div>
       <!-- ngIf: suppliedValidation.length>0 -->
     </div>
     <div class="col-lg-4 ">

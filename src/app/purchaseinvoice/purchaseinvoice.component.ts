@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
+import { CookieService } from 'ngx-cookie-service';
+import {Router} from '@angular/router';
+import { ApiService } from '../api.service'
+
 
 @Component({
   selector: 'app-purchaseinvoice',
@@ -8,6 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class PurchaseinvoiceComponent implements OnInit {
 
+  datePickerConfig: Partial<BsDatepickerConfig>;
   invoiceForm: FormGroup;
   suppliedqty:any='';
   freeqty:any='';
@@ -30,7 +36,9 @@ export class PurchaseinvoiceComponent implements OnInit {
 
 
  
-  constructor() { }
+  constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+  }
 
   ngOnInit() {
     
