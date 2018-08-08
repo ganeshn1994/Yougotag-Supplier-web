@@ -8,24 +8,20 @@
     </option>
   </select>
 </div>
-  <div class="col-sm-2">
-      <div class="form-group">
-        <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text">
-        <i class="fa fa-calendar egp-font20"></i>
-      </div>
-      <div class="egp-errorClass-color ng-binding"></div>
-    </div>
-    <div class="col-sm-2">
-        <div class="form-group">
-          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text">
-          <i class="fa fa-calendar egp-font20"></i>
-        </div>
-        <!-- <div data-ng-if="datevalidation === 'true'" class="egp-errorClass-color">{{datevalidation}}</div> -->
-        <div class="egp-errorClass-color ng-binding"></div>
-      </div>
+<div class="col-sm-2">
+  <div class="form-group">
+    <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="Start Date">
+  </div>
+</div>
+<div class="col-sm-2">
+  <div class="form-group">
+    <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="End Date">
+  </div>
+  <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
+</div>
       <div class="col-sm-2">
-         <select name="Status" id="postatus" [(ngModel)]="Status" ng-init="Status =' '" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
-            <option value=" ">--Select Status--</option>
+         <select name="Status" id="postatus" [(ngModel)]="status" (change)="selectStatus($event)" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+            <option value="">--Select Status--</option>
             <option value="A">Approved</option>
             <option value="P">Pending</option>
             <option value="R">Rejected</option>
@@ -33,7 +29,7 @@
       </div>
       <div class="col-sm-2">
           
-            <button type="submit" (click)="displayPOList(pharmacyid,status,startdate,enddate)" class="btn btn-primary">Search</button>
+            <button type="submit" (click)="displayPOList()" class="btn btn-primary">Search</button>
             &nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-danger egp-button-width" (click)="clearSearchFilters()">Clear</button>
             <br>
@@ -70,7 +66,8 @@
                                     <td class="ng-binding">{{poinvoice.poDate}}</td>
                                     <td class="ng-binding">{{poinvoice.pharmacyName}}</td>
                                     <td class="ng-binding">{{poinvoice.fieldAgentId}}</td>
-                                    <td *ngIf="poinvoice.poStatus=='A'" class="ng-scope">Approved</td> 
+                                    <td *ngIf="poinvoice.poStatus=='A'" class="ng-scope">Approved</td>
+                                    <td *ngIf="poinvoice.poStatus=='P'" class="ng-scope">Pending</td>
                                     <td style="text-align: center;"><a (click)="viewInvoice(poinvoice.pharmacyId,poinvoice.poNumber)" data-toggle="modal" data-target="#viewInvoice"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td>
                              </tr>     
                           </tbody>
@@ -192,11 +189,118 @@
                          
                         <div class="modal-footer">
                           <button class="ui-button-raised ui-button-danger" pButton type="button" (click)="rejectPo()" label="Reject PO" ></button>
-                          <button class="ui-button-raised ui-button-success" pButton type="button" (click)="generatePo(apiservice.polist.tradeCompositeId,apiservice.polist.quantityOrdered)" label="Generate" ></button>
+                          <button class="ui-button-raised ui-button-success" pButton type="button" (click)="generatePo(apiservice.polist.tradeCompositeId,apiservice.polist.quantityOrdered)" data-toggle="modal" data-target="#generateInvoice" label="Generate" ></button>
                         </div>
                       </div>
                       
                     </div>
                   </div>
                 
+                  <div class="container">
+                                 
+                    <!-- Modal -->
+                    <div class="modal fade" id="generateInvoice" role="dialog">
+                      <div class="modal-dialog">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Invoice Details</h4>
+                          </div>
+                          <div class="modal-body">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <b>pharmacyName:</b>{{poinvoice.pharmacyname}}
+                            </div>
+                            <div class="col-md-4">
+                              <b>PO Number:</b>{{apiservice.poinvoice.ponumber}}
+                            </div>
+                            <div class="col-md-4">
+                              <b>Invoice Number:</b>{{apiservice.poinvoice.invnum}}
+                            </div>
+                          </div>
+                              <div class="dataTable_wrapper viewinvoice">
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr class="egp-headerbold">
+                                          <th style="text-align: -webkit-right;">#</th>
+                                          <th>Drug Name</th>
+                                          <th>Expiry</th>
+                                          <th>Batch</th>
+                                          <th>Qty Available</th>
+                                          <th>Qty Ordered</th>
+                                          <th style="text-align: -webkit-right;">Qty Supplied</th>
+                                          <th style="text-align: right;">Free Qty</th>
+                                          <th style="text-align: -webkit-right;">Sale Rate</th>
+                                          <th style="text-align: -webkit-right;">MRP</th>
+                                          <th style="text-align: -webkit-right;">Scheme Value</th>
+                                          <th style="text-align: -webkit-right;">CGST%</th>
+                                          <th style="text-align: -webkit-right;">Addl GST%</th>
+                                          <th style="text-align: -webkit-right;">Tax On</th>
+                                          <th style="text-align: -webkit-right;">Mfg/Mkt</th>
+                                          <th style="text-align: -webkit-right;">Disc%</th>
+                                          <th style="text-align: -webkit-right;">Total</th>
 
+                                          <th></th>
+                                          
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let invoice of apiservice.poinvoice ">
+                                      <th style="text-align: -webkit-right;" class="ng-binding">{{invoice.id}}</th>
+                                              <td hidden="true" class="ng-binding">{{invoice.supplierId}}</td>
+                                              <td class="ng-binding">{{invoice.tradeCompositeId}}</td>
+                                              <td class="ng-binding">{{invoice.expiryDate}}</td>
+                                              <td class="ng-binding">{{invoice.batchNumber}}</td>
+                                              <td class="ng-binding">{{invoice.quantityAvailable}}</td>
+                                              <td class="ng-scope">{{invoice.quantityOrdered}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.quantitySuppliedInBaseUnit}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.expiryDate}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.stockUnitSalesPrice}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.stockUnitMaximumRetailPrice}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.stockUnitMaximumRetailPrice}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.cgstPercentage}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.sgstPercentage}}</td>
+                                              <td *ngIf="invoice.taxOnWhat=='MI'" style="text-align: right;" class="ng-binding">MRP + Free</td>
+                                              <td *ngIf="invoice.taxOnWhat=='ME'" style="text-align: right;" class="ng-binding">MRP - Free</td>
+                                              <td *ngIf="invoice.taxOnWhat=='SI'" style="text-align: right;" class="ng-binding">Sale Rate + Free</td>
+                                              <td *ngIf="invoice.taxOnWhat=='SE'" style="text-align: right;" class="ng-binding">Sale Rate - Free</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.manufacturerMnemonic}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.discountPercentage}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.schemeDiscountAmount}}</td>
+                                              <td style="text-align: right;" class="ng-binding">{{invoice.unitTotal}}</td>
+                                              <td style="text-align: center;"><a (click)="removeDrugName(invoicedetailsmaindataobj, $index)"><abbr title="Delete" class="egp-border-bottom">
+                                                  <i class="fa fa-trash egp-font24"></i></abbr></a></td>
+                   
+                                              
+                                            </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                            <div class="row total">
+                              <div class="col-sm-3 ng-binding">
+                                <b style="color: black; font-size: 14px; font-weight: bold !important;">Gross
+                                  Amount(After Discount):</b>{{apiservice.totalunitamt}}
+                              </div>
+                              <div class="col-sm-3 ng-binding">
+                                <b style="color: black; font-size: 14px; font-weight: bold !important;">GST
+                                  Amount: </b>{{apiservice.totalgstamt}}
+                              </div>
+                              <div class="col-sm-3 ng-binding">
+                                <b style="color: black; font-size: 14px; font-weight: bold !important;">Total
+                                  Amount: </b>{{apiservice.totalunitamt}}
+                              </div>
+                              <div class="col-sm-3 ng-binding">
+                                <b style="color: black; font-size: 14px; font-weight: bold !important;">Credit
+                                  Amount: </b>0.00
+                              </div>
+                            </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>

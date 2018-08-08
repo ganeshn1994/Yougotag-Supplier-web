@@ -8,6 +8,8 @@ import { environment } from '../app/config'
 import { RequestOptions, BaseRequestOptions, RequestOptionsArgs } from '@angular/http';
 import { InputTextModule } from 'primeng/inputtext';
 import { parse } from 'url';
+import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
+
 
 
 
@@ -52,16 +54,16 @@ export class ApiService {
   polistbyId = [];
   tci:any;
   qo:any;
+  datePickerConfig: Partial<BsDatepickerConfig>;
+  poinvoice=[];
+  text: string;
+  results:any=[];
+  selecteddrug:any;
 
   loginData = {
     deviceId: Date.now()
   }
-  detailsBOList ={
-    detailsBOList:[{
-      tradeCompositeId:this.tci,
-      quantityOrdered:this.qo
-    }]
-  } 
+ 
 
 
   baseUrl = environment.baseUrl;
@@ -71,18 +73,36 @@ export class ApiService {
 
 
   constructor(private httpClient: HttpClient, public router: Router) {
-
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+    var date = new Date();
+    this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
+    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
   }
 
   public getToken(): string {
     return localStorage.getItem('authToken');
   }
 
+  selectChangeHandler(event: any) {
+    //update the ui
+    this.selectedpharma = event.target.value;
+    console.log("selected:" + JSON.stringify(this.selectedpharma));
+  }
+  selectStatus(event: any) {
+    //update the ui
+    this.status = event.target.value;
+    console.log("selected:" + JSON.stringify(this.status));
+  }
+  selectpaymentStatus(event: any) {
+    //update the ui
+    this.paymentStatus = event.target.value;
+    console.log("selected:" + JSON.stringify(this.paymentStatus));
+  }
   
 
   login(loginData) {
 
-    let url = this.baseUrl + '/portal/login';
+    let url = this.baseUrl + '/egangaa-portal/login';
     return this.httpClient.post(url, loginData).subscribe((data: any) => {
       if (data.messages == "User credentials do not match!") {
         data.token = null;
@@ -95,6 +115,8 @@ export class ApiService {
       }
     })
   }
+
+  //SALES ORDER
   getdetails() {
     let deviceId = sessionStorage.getItem('deviceId');
     sessionStorage.setItem('authToken', this.authToken);
@@ -125,7 +147,10 @@ export class ApiService {
   getInvoice() {
     let deviceId = sessionStorage.getItem('deviceId');
     console.log('deviceId:' + deviceId);
-    let url = this.serviceUrl + "/invoice/suppliers/pharmacies/invoices/list?offset=0&size=10&sdate=2018-08-01&edate=2018-08-02&null&_=" + deviceId;
+    console.log("startdate:" + this.startdate);
+    let startdate = this.startdate;
+    let enddate = this.enddate;
+    let url = this.serviceUrl + "/invoice/suppliers/pharmacies/invoices/list?offset=0&size=10&sdate="+startdate + "&edate=" + enddate + "&null&_=" + deviceId;
     return this.httpClient.get(url).subscribe((data: any) => {
       let invoicedata = JSON.parse(data.payload);
       let invoicelist = invoicedata.supplierInvoiceHeadersArrayListBO
@@ -143,7 +168,24 @@ export class ApiService {
     this.invoicenum = invoicenum;
   }
 
-  
+  search() {
+    let deviceId = sessionStorage.getItem('deviceId');
+    let startdate = this.startdate;
+    let enddate = this.enddate;
+    let status = this.status;
+    let paymentStatus = this.paymentStatus;
+    let url = this.serviceUrl + "/invoice/suppliers/pharmacies/invoices/list?offset=0&size=10&sdate=" + startdate + "&edate=" + enddate + "&status=" + status + "&paymentstatus=" + paymentStatus + "&null&_="+deviceId;
+    this.httpClient.get(url).subscribe((data: any) => {
+      let jsonObj =  JSON.parse(data.payload);
+      console.log("jsonObj:" + JSON.stringify(jsonObj));
+      let invoicelist = jsonObj.supplierInvoiceHeadersArrayListBO
+      this.invoicelist = invoicelist;
+      let supplierid = invoicelist.supplierId;
+      for(let i = 0;i<invoicelist.length; i++){
+        let supplierid = invoicelist[i].supplierId;
+      }
+  });
+}
  
 
   getDetailsid() {
@@ -237,27 +279,81 @@ export class ApiService {
       let qo = this.qo;
     console.log('tci:' + tci);
     console.log('qo:' + qo);
-    sessionStorage.setItem('tci',tci);
-    sessionStorage.setItem('qo',qo);
-
-
     }
       
     })
   }
   generatePo() {
-
+    let detailsBOList ={
+      detailsBOList:[{
+        tradeCompositeId:this.tci,
+        quantityOrdered:this.qo
+     
+      }]
+    } 
     let url = this.serviceUrl + '/suppliers/potoinvoice';
-    return this.httpClient.post(url,this.detailsBOList).subscribe((data: any) => {
+    return this.httpClient.post(url,detailsBOList).subscribe((data: any) => {
       let jsonObj = JSON.parse(data.payload);
       console.log("jsonObj:" + JSON.stringify(jsonObj));
+      let poinvoice = jsonObj.supplierStocksBO;
+      console.log("poinvoice:" + JSON.stringify(poinvoice));
+      this.poinvoice = poinvoice;
         })
       }
   //search
-  displayPOList(pharmacyid, status, startdate, enddate) {
-    console.log('search');
+  searchPOList() {
+    let deviceId = sessionStorage.getItem('deviceId');
+    let supplierid =  sessionStorage.getItem('supplierid');
+    let startdate = this.startdate;
+    let enddate = this.enddate;
+    let status = this.status;
+    let url = this.serviceUrl + "/po/orders/list?size=10&offset=0&sid="+ supplierid + "&status="+status+"&sdate="+startdate+"&edate="+enddate+"&null&_=" + deviceId;
+    return this.httpClient.get(url).subscribe((data:any)=>{
+      let jsonObj = JSON.parse(data.payload);
+      console.log('jsonObj:' + JSON.stringify(jsonObj));
+      let polist = jsonObj.purchaseOrderDetailBO;
+      let poNumber = jsonObj.poNumber;
+      let poDate = jsonObj.poDate;
+      let pharmacyName = jsonObj.pharmacyName;
+      this.polistbyId = polist;
+      this.pname = pharmacyName;
+      this.poDate = poDate;
+      this.ponumber = poNumber;
+    //   for(let i = 0;i<polist.length;i++){
+    //   this.tci = polist[i].tradeCompositeId;
+    //   this.qo = polist[i].quantityOrdered;
+    //   let tci =this.tci;
+    //   let qo = this.qo;
+    // console.log('tci:' + tci);
+    // console.log('qo:' + qo);
+    //   }
+    })
   }
 
+  //Create Invoice
+
+  searchcreate(event) {
+    let text =this.text;
+    console.log("text:" + text);
+    let url = this.serviceUrl + "/suppliers/tci?offset=0&size=25&tci="+event.query+"&null&_=1533625394356"
+    this.httpClient.get(url).subscribe((data:any) => {
+        let jsonObj = JSON.parse(data.payload);
+        console.log("result:" + JSON.stringify(data));
+        let tcilist = jsonObj.tradeCompositeIdSearchBOList;
+        this.results = tcilist;
+        for(let i=0;i<tcilist.length;i++){
+          let tci = tcilist[i].tradeCompositeId;
+          
+          console.log("tci:" + tci)
+        }
+        
+          });
+}
+
+  createInvoice(selecteddrug){
+    this.selecteddrug = selecteddrug;
+    console.log("selected" +  selecteddrug);
+  }
  
 
   logout() {

@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Router} from '@angular/router';
 import { ApiService } from '../api.service'
 import { CookieService } from 'ngx-cookie-service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders,HttpClient } from '@angular/common/http';
 import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
 import {PaginatorModule} from 'primeng/paginator';
+import { environment } from '../config';
 
 
 
@@ -15,36 +16,32 @@ import {PaginatorModule} from 'primeng/paginator';
 })
 export class HomeComponent implements OnInit {
   
-  datePickerConfig: Partial<BsDatepickerConfig>;
-  selectedDay: any = '';
-  startdate:any;
-  enddate:any;
-  paymentStatus =' ';
-  Status =' ';
+ 
+
+  baseUrl = environment.baseUrl;
+  serviceUrl = environment.serviceUrl;
   
-  constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
-    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
-    var date = new Date();
-    this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
-    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
+  constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService,private cookieService: CookieService) { 
+    
 
   }
   ngOnInit(){
     // this.apiservice.getSession();
+    this.getpharma();
     this.apiservice.getInvoice();
     
   }
 
   selectChangeHandler(event: any) {
     //update the ui
-    this.selectedDay = event.target.value;
-    console.log("selected:" + JSON.stringify(this.selectedDay));
+ this.apiservice.selectChangeHandler(event);
   }
 
-  startdates(event: any) {
-    //update the ui
-    this.startdate = event.target.value;
-    console.log("selected:" + JSON.stringify(this.startdate));
+  selectStatus(event: any) {
+    this.apiservice.selectStatus(event);
+  }
+  selectpaymentStatus(event: any) {
+    this.apiservice.selectpaymentStatus(event);
   }
   listdata(){
     
@@ -60,9 +57,9 @@ export class HomeComponent implements OnInit {
    getInvoice(){
      this.apiservice.getInvoice();
    }
-  //  search(){
-  //    this.apiservice.search();
-  //  }
+    search() {
+  this.apiservice.search();
+}
    getInvoiceId(invoicenum){
      this.apiservice.getInvoiceId(invoicenum);
      this.getDetailsid()

@@ -9,12 +9,11 @@
   </select>
 </div>
 <div class="col-sm-4" style="margin-top: 6px;">
-  <input name="drugNameDynamicInvoice" placeholder="Search Drug" data-ng-model="drugNameDynamicInvoice" id="drugNameDynamicInvoice" data-ng-keyup="autodisplayDrugNamesinInvoice(drugNameDynamicInvoice, '')" required="" class="ng-pristine md-input ng-invalid ng-invalid-required ng-touched" aria-invalid="true"><div class="md-errors-spacer"></div>
-  <!-- ngIf: checkFlag === 'false' -->
-  <div><input name="pharmacyTINHidden" data-ng-model="pharmacyTINHidden" id="pharmacyTINHidden" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
-  </div>
-  <div><input name="addlGstType" data-ng-model="addlGstType" id="addlGstType" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
-  </div>
+  <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" >
+  </p-autoComplete>
+  <ul class="drugname">
+      <li *ngFor="let drug of apiservice.results;let i=index"><span class="badge badge-pill badge-primary" (click)="createInvoice(drug.tradeCompositeId)"  data-toggle="modal" data-target="#myModal" >{{drug.tradeCompositeId}}</span></li>
+    </ul>
 </div>
 
 <div class="col-md-12">
@@ -72,3 +71,118 @@
       </div>
     </div>
   </div>
+  <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Sales Invoice - Drug Selection</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <label style="color: black; font-size: 11; font-weight: 300 !important;">Drug
+              Name</label><br> <label style="color: #716e6e;" class="ng-binding">TEST DRUG 1, Batch=TESTBTH, ExpDt=2018-10-31) </label>
+              <!-- <label><br>HSN:{{hsnCode}}</label>
+            <small style="color: #716e6e;" ng-if="{{manufacturerMnemonic}}">Mfg/Mkt: {{manufacturerMnemonic}}</small> -->
+          </div>
+          <div class="col-sm-6">
+          <label style="color: black; font-size: 13; font-weight: 500 !important;">Batch Number</label>
+            <div data-ng-show="batchReadonly === 'false'" aria-hidden="false" class="">
+              <select id="batch" data-ng-model="batchnumber" data-ng-options="batch as batch for batch in stockListData" data-ng-change="getDrugeDetailAsPerBatch(batchnumber)" data-ng-init="batchnumber ===''" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required" aria-invalid="true"><option value="" disabled="" selected="" class="">--Select Batch--</option><option value="0" label="TESTBTH">TESTBTH</option></select>
+            </div>
+            <div data-ng-show="batchReadonly === 'true'" aria-hidden="true" class="ng-hide">
+              <label data-ng-model="batchnumber" class="ng-pristine ng-untouched ng-valid ng-binding" aria-invalid="false"></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;">Expiry</label><br>
+            <!-- ngIf: showlabel === 'true' -->
+          </div>
+          <div class="col-sm-2">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;">MRP</label><br>
+            <!-- ngIf: showlabel === 'true' -->
+          </div>
+          <div class="col-sm-2">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;">CGST%</label><br>
+            <!-- ngIf: showlabel === 'true' -->
+          </div>
+          <div class="col-sm-2" ng-switch="" on="addlGstType">
+            <!-- ngSwitchWhen: sgst -->
+            <!-- ngSwitchWhen: igst -->
+            <!-- ngSwitchDefault:  --><div ng-switch-default="" class="ng-scope">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;" class="ng-binding">Addl. GST</label></div><!-- end ngSwitchWhen: -->
+            <!-- ngIf: showlabel === 'true' -->
+              <input style="width: 90%; height: 40px;" data-ng-model="addlgsttype" id="addlgsttype" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
+          </div>
+          <div class="col-sm-2">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;">Qty Available</label><br> 
+              <!-- ngIf: showlabel === 'true' -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText> 
+              <label for="float-input">Qty to be Supplied(Strip)</label>
+          </span>
+          </div>
+          <div class="col-md-6">
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText> 
+              <label for="float-input">Free Qty(Strip)</label>
+          </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 space">
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText> 
+              <label for="float-input">Disc%</label>
+          </span>
+          </div>
+          <div class="col-md-6 space">
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText> 
+              <label for="float-input">Sale Rate</label>
+          </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 space">
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText> 
+              <label for="float-input">Scheme Amount</label>
+          </span>
+          </div>
+          <div class="col-md-6 space">
+            <span class="ui-float-label">
+              <label for="float-input">Tax On</label>
+          </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 space">
+            <label for="float-input">Total Amount:</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 pull-right">
+           
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <p-button icon="fa fa-check" label="Scheme"></p-button>&nbsp;
+          <p-button icon="fa fa-clear" label="Clear"></p-button>&nbsp;
+          <p-button icon="fa fa-save" data-dismiss="modal" label="Save"></p-button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -15,6 +15,8 @@ import {ButtonModule} from 'primeng/button';
 import {PaginatorModule} from 'primeng/paginator';
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
 import {MenuItem} from 'primeng/api';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+
 
 
 
@@ -123,7 +125,8 @@ const routes :Routes= [
     BsDatepickerModule.forRoot(),
      PaginatorModule,
      ButtonModule,
-     AccordionModule
+     AccordionModule,
+     AutoCompleteModule
   ],
   providers: [ApiService,CookieService ,
   //   {  provide: HTTP_INTERCEPTORS,

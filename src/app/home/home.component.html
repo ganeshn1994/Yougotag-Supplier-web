@@ -13,20 +13,18 @@
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text">
-          <i	class="fa fa-calendar egp-font20"></i>
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="Start Date">
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group">
-          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text">
-          <i	class="fa fa-calendar egp-font20"></i>
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="End Date">
         </div>
         <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
     </div>
     <div class="col-sm-2">
-        <select id="Status" name="Status" [(ngModel)]="Status" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
-          <option value=" ">--Select Status--</option>
+        <select id="Status" name="Status" [(ngModel)]="status" (change)="selectStatus($event)" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+          <option value="">--Select Status--</option>
           <option value="A">Approved</option>
           <option value="P">Pending</option>
           <option value="RR">Rejection Raised</option>
@@ -37,8 +35,8 @@
         </select>
     </div>
     <div class="col-sm-2">
-        <select id="paymentStatus" name="paymentStatus" [(ngModel)]="paymentStatus" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
-          <option value=" ">--Select Payment Status--</option>
+        <select id="paymentStatus" name="paymentStatus" [(ngModel)]="paymentStatus" (change)="selectpaymentStatus($event)" class="ng-pristine ng-valid ng-touched" aria-invalid="false">
+          <option value="">--Select Payment Status--</option>
           <option value="FP">Fully Paid</option>
           <option value="PP">Partially Paid</option>
           <option value="NP">Unpaid</option>
