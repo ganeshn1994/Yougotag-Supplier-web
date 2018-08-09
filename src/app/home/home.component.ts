@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   serviceUrl = environment.serviceUrl;
   
   constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService,private cookieService: CookieService) { 
-    
+    this.apiservice.getDefaultDate();
 
   }
   ngOnInit(){

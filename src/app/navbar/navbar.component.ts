@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import { ApiService } from '../api.service';
 import { CookieService } from 'ngx-cookie-service';
 import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
+import { HttpHeaders,HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-navbar',
@@ -10,12 +11,10 @@ import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  datePickerConfig: Partial<BsDatepickerConfig>;
-  startDateInCompanyReport:any='';
-  endDateInCompanyReport:any='';
 
-  constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
-    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+  constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService,private cookieService: CookieService) { 
+    this.apiservice.getDefaultDate();
+
   }
 
   ngOnInit() {

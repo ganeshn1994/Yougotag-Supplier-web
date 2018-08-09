@@ -258,13 +258,13 @@
                       <div class="row date">
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" [(ngModel)]="startDateInCompanyReport" id="startDateInCompanyReport" type="text" placeholder="Start Date">
+                              <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" [(ngModel)]="startdate" id="startDateInCompanyReport" type="text" placeholder="{{apiservice.startdate}}">
                               <i class="fa fa-calendar egp-font20"></i>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-touched ng-invalid ng-invalid-required" [(ngModel)]="endDateInCompanyReport" id="endDateInCompanyReport" type="text" placeholder="End Date">
+                              <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-touched ng-invalid ng-invalid-required" [(ngModel)]="enddate" id="endDateInCompanyReport" type="text" placeholder="{{apiservice.enddate}}">
                               <i class="fa fa-calendar egp-font20"></i>
                             </div>
               

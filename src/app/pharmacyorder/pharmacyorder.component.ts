@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { pipeDef } from '../../../node_modules/@angular/core/src/view';
+import {Router} from '@angular/router';
+import { HttpHeaders,HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-pharmacyorder',
@@ -11,12 +13,13 @@ import { pipeDef } from '../../../node_modules/@angular/core/src/view';
 export class PharmacyorderComponent implements OnInit {
 
   selectedDay: any = [];
-  startdate:any = '';
-  enddate:any = '';
   status:any = '';
 
   
-  constructor(private apiservice:ApiService) { }
+  constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService) { 
+    this.apiservice.getDefaultDate();
+
+  }
 
   ngOnInit() {
     // this.apiservice.pharmacyorder();

@@ -10,12 +10,12 @@
 </div>
 <div class="col-sm-2">
   <div class="form-group">
-    <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="Start Date">
+    <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="{{apiservice.startdate}}">
   </div>
 </div>
 <div class="col-sm-2">
   <div class="form-group">
-    <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="End Date">
+    <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="{{apiservice.enddate}}">
   </div>
   <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
 </div>

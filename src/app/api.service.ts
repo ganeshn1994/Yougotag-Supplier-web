@@ -72,7 +72,9 @@ export class ApiService {
   
 
 
-  constructor(private httpClient: HttpClient, public router: Router) {
+  constructor(private httpClient: HttpClient, public router: Router) { }
+
+ getDefaultDate(){
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     var date = new Date();
     this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
@@ -102,7 +104,7 @@ export class ApiService {
 
   login(loginData) {
 
-    let url = this.baseUrl + '/egangaa-portal/login';
+    let url = this.baseUrl + '/portal/login';
     return this.httpClient.post(url, loginData).subscribe((data: any) => {
       if (data.messages == "User credentials do not match!") {
         data.token = null;

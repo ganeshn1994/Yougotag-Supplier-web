@@ -17,8 +17,6 @@ export class CreateinvoiceComponent implements OnInit {
   
   filteredCountriesMultiple: any[];
   
-  brands: string[] = ['Audi','BMW','Fiat','Ford','Honda','Jaguar','Mercedes','Renault','Volvo','VW'];
-  
   filteredBrands: any[];
   
   brand: string;
