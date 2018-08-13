@@ -9,11 +9,14 @@
   </select>
 </div>
 <div class="col-sm-4" style="margin-top: 6px;">
-  <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" >
+  <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" (onClear)="search($event)">
   </p-autoComplete>
+  <div *ngIf="text!=''">
   <ul class="drugname">
       <li *ngFor="let drug of apiservice.results;let i=index"><span class="badge badge-pill badge-primary" (click)="createInvoice(drug.tradeCompositeId)"  data-toggle="modal" data-target="#myModal" >{{drug.tradeCompositeId}}</span></li>
     </ul>
+    </div>
+    <div *ngIf="text===''"></div>
 </div>
 
 <div class="col-md-12">

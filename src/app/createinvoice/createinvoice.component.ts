@@ -9,6 +9,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 })
 export class CreateinvoiceComponent implements OnInit {
 
+  textlen: any;
   country: any;
     
   countries: any[];
@@ -20,6 +21,8 @@ export class CreateinvoiceComponent implements OnInit {
   filteredBrands: any[];
   
   brand: string;
+  text: any;
+  x:any;
   constructor(private apiservice:ApiService) { }
 
   ngOnInit() {
@@ -33,7 +36,9 @@ export class CreateinvoiceComponent implements OnInit {
     
   }
   search(event){
+    if(this.text.length>0){
     this.apiservice.searchcreate(event);
+    }
   }
 
   createInvoice(selecteddrug){
