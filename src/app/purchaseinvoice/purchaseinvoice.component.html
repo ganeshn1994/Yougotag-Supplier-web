@@ -23,11 +23,14 @@
       <!-- ngIf: suppliedValidation.length>0 -->
     </div>
     <div class="col-sm-4" style="margin-top: 6px;">
-      <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="searchcacf($event)" >
+      <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="searchcacf($event)" (onClear)="searchcacf($event)">
       </p-autoComplete>
-      <ul  class="drugname">
-          <li *ngFor="let drug of apiservice.cacf;let i=index"><span class="badge badge-pill badge-primary"  (click)="createInvoice(drug.tradeCompositeId,drug.batchNumber,drug.expiryDate)"  data-toggle="modal" data-target="#myModal" >{{drug.caCfName}}</span></li>
+      <div *ngIf="text!=''">
+        <ul  class="drugname">
+            <li *ngFor="let drug of apiservice.cacf;let i=index"><span class="badge badge-pill badge-primary"  (click)="createInvoice(drug.tradeCompositeId,drug.batchNumber,drug.expiryDate)"  data-toggle="modal" data-target="#myModal" >{{drug.caCfName}}</span></li>
         </ul>
+      </div>
+      <div *ngIf="text===''"></div>
     </div>
   </div>
   <div class="row">
@@ -170,13 +173,10 @@
 
             <div class="col-sm-3" style="margin-top: -10;">
               <!-- <label class="egp-color-black"></label> -->
-              <div class="input-group" style="width: 80%;">
-                <input placeholder="Exp. Date" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" type="text" ngtrim="true" data-provide="datepicker"
-                  id="expiry" [(ngModel)]="expiry" data-date-start-date="0d" required="" aria-invalid="true">
-                <span class="input-group-addon egp-span-backcolor">
-                  <i class="fa fa-calendar egp-font20"></i>
-                </span>
-              </div>
+              <div class="form-group">
+          <input bsDatepicker [bsConfig]="minDateConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="expiry" id="expiry" type="text" value="{{apiservice.enddate}}">
+          <i class="fa fa-calendar egp-font20"></i>
+        </div>
             </div>
             <div class="col-sm-2">
               <!-- <label class="egp-color-black md-required" for="suppliedqty"></label> -->

@@ -14,6 +14,7 @@ import { ApiService } from '../api.service'
 export class PurchaseinvoiceComponent implements OnInit {
 
   datePickerConfig: Partial<BsDatepickerConfig>;
+  minDateConfig: Partial<BsDatepickerConfig>;
   invoiceForm: FormGroup;
   suppliedqty:any='';
   freeqty:any='';
@@ -32,22 +33,29 @@ export class PurchaseinvoiceComponent implements OnInit {
   addlgstpercent:any='';
   taxmodal:any='';
   manufacturerMnemonic:any='';
-
+  text:any;
+  expiry:any='';
+  enddate:any='';
 
 
  
   constructor(private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+    this.minDateConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD',minDate:new Date()});
+    this.apiservice.getDefaultDate();
   }
 
   ngOnInit() {
-    
-
   }
+  
   onSubmit(){
   console.log("suppliedquality:"+ this.suppliedqty);
   }
   searchcacf(event){
+    if(this.text.length>0){
     this.apiservice.searchcacf(event);
+
+    }
   }
+  
 }

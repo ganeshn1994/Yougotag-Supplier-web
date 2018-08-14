@@ -102,11 +102,12 @@ export class ApiService {
   
 
 
-  constructor(private httpClient: HttpClient, public router: Router) {
-    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+  constructor(private httpClient: HttpClient, public router: Router) {}
+
+  getDefaultDate(){
     var date = new Date();
     this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
-    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
+    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2); 
   }
 
   public getToken(): string {
@@ -129,17 +130,12 @@ export class ApiService {
     console.log("selected:" + JSON.stringify(this.paymentStatus));
   }
 
-  getDefaultDate(){
-    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
-    var date = new Date();
-    this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
-    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
-  }
+  
   
 
   login(loginData) {
 
-    let url = this.baseUrl + '/egangaa-portal/login';
+    let url = this.baseUrl + '/portal/login';
     return this.httpClient.post(url, loginData).subscribe((data: any) => {
       if (data.messages == "User credentials do not match!") {
         data.token = null;
@@ -458,7 +454,6 @@ export class ApiService {
     })
     
   }
-<<<<<<< HEAD
 
   //Schemes
 
@@ -484,7 +479,7 @@ export class ApiService {
     
   }
  
-=======
+
   quantitys(event){
     this.quantity = event.target.value;
     console.log("quantity:" + this.quantity);
@@ -566,7 +561,6 @@ export class ApiService {
 
 
 } 
->>>>>>> 673932ebde7350e3878d6c6d031bc7c0d4f5e1a8
 
   logout() {
     return new Promise((resolve, reject) => {
