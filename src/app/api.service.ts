@@ -31,6 +31,7 @@ export class ApiService {
   supplierid:any;
   pharmaname = [];
   invoicelist = [];
+  schemelist = [];
   invoicenum = [];
   tenantList = [];
   tenantid: any = [];
@@ -355,6 +356,30 @@ export class ApiService {
   createInvoice(selecteddrug){
     this.selecteddrug = selecteddrug;
     console.log("selected" +  selecteddrug);
+  }
+
+  //Schemes
+
+  schemeList(){
+    let deviceId = sessionStorage.getItem('deviceId');
+    let url=this.serviceUrl + "/suppliers/scheme/list?size=10&page=0&null&_="+deviceId;
+    return this.httpClient.get(url).subscribe((data:any)=>{
+      let jsonObject=JSON.parse(data.payload);
+      console.log("jsonObj:" + JSON.stringify(jsonObject));
+      let schemelist=jsonObject.supplierSchemeMasterBOSummaryBOList;
+      this.schemelist=schemelist;
+      let supplierid = schemelist.supplierId;
+      for(let i = 0;i<schemelist.length; i++){
+        let supplierid = schemelist[i].supplierId;
+        console.log("supplierid:" + supplierid);
+        sessionStorage.setItem('supplierid' , supplierid );
+      }
+    });
+  }
+
+  editScheme(schemeObj){
+    
+    
   }
  
 
