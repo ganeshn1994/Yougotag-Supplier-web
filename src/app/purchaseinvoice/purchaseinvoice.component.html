@@ -22,13 +22,12 @@
         </div>
       <!-- ngIf: suppliedValidation.length>0 -->
     </div>
-    <div class="col-lg-4 ">
-
-      <label style="color: black; margin-bottom: -9px;" class="md-required" for="order"></label>
-      <input style="width: 70%; height: 40px;" placeholder="Ca/Cf"id="order" [(ngModel)]="cacfid" maxlength="128">
-      <div class="md-errors-spacer"></div>
-
-      <!-- ngIf: orderValidation.length>0 -->
+    <div class="col-sm-4" style="margin-top: 6px;">
+      <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="searchcacf($event)" >
+      </p-autoComplete>
+      <ul  class="drugname">
+          <li *ngFor="let drug of apiservice.cacf;let i=index"><span class="badge badge-pill badge-primary"  (click)="createInvoice(drug.tradeCompositeId,drug.batchNumber,drug.expiryDate)"  data-toggle="modal" data-target="#myModal" >{{drug.caCfName}}</span></li>
+        </ul>
     </div>
   </div>
   <div class="row">

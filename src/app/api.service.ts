@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpEvent, HttpEventType, HttpParams } from '@angular/common/http'
 import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router'
-import { Observable } from 'rxjs'
 import { reject } from 'q';
 import { environment } from '../app/config'
 import { RequestOptions, BaseRequestOptions, RequestOptionsArgs } from '@angular/http';
 import { InputTextModule } from 'primeng/inputtext';
 import { parse } from 'url';
 import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
+import { FloatLabelType } from '../../node_modules/@angular/material';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 
 
@@ -59,6 +62,11 @@ export class ApiService {
   text: string;
   results:any=[];
   selecteddrug:any;
+  supplierStocks: any = [];
+  respArray:any =[];
+  igstArray:any = [];
+  gstamtArray:any = [];
+  quantity:any;
 
   loginData = {
     deviceId: Date.now()
@@ -68,13 +76,32 @@ export class ApiService {
 
   baseUrl = environment.baseUrl;
   serviceUrl = environment.serviceUrl;
+  batch: any;
+  exp: any;
+  pharmaid: any;
+  selectedbatch: any;
+  sgstpercent: number;
+  cgstpercent: number;
+  igstpercent: number;
+  selectcacf: any;
+  cacf: any =[];
+  totalamtArray: any= [];
+  gstperArray:any = [];
+  salerates: any;
+  totalamt: any;
+  gstamt: { taxOnWhat: any; MRP: any; salerate: any; totalquan: any; schemedisc: any; };
+  sgst: { sgstPercentage: any; cgstPercentage: any; };
+  igst: { cgstPercentage: any; igstPercentage: any; };
+  gstMRP: any;
+  gstper: any;
+  drugname: any;
+  batchno: any;
+  taxmodal: any;
 
   
 
 
-  constructor(private httpClient: HttpClient, public router: Router) { }
-
- getDefaultDate(){
+  constructor(private httpClient: HttpClient, public router: Router) {
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     var date = new Date();
     this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
@@ -87,12 +114,12 @@ export class ApiService {
 
   selectChangeHandler(event: any) {
     //update the ui
-    this.selectedpharma = event.target.value;
+    this.selectedpharma = event;
     console.log("selected:" + JSON.stringify(this.selectedpharma));
   }
   selectStatus(event: any) {
     //update the ui
-    this.status = event.target.value;
+    this.status = event;
     console.log("selected:" + JSON.stringify(this.status));
   }
   selectpaymentStatus(event: any) {
@@ -100,11 +127,18 @@ export class ApiService {
     this.paymentStatus = event.target.value;
     console.log("selected:" + JSON.stringify(this.paymentStatus));
   }
+
+  getDefaultDate(){
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
+    var date = new Date();
+    this.startdate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('01');
+    this.enddate = date.getFullYear()  + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) ;
+  }
   
 
   login(loginData) {
 
-    let url = this.baseUrl + '/portal/login';
+    let url = this.baseUrl + '/egangaa-portal/login';
     return this.httpClient.post(url, loginData).subscribe((data: any) => {
       if (data.messages == "User credentials do not match!") {
         data.token = null;
@@ -228,9 +262,15 @@ export class ApiService {
     let url = this.serviceUrl + "/suppliers/preferred/pharmacies/details?null&_=" + deviceId;
     return this.httpClient.get(url).subscribe((data: any) => {
       let jsonObj = JSON.parse(data.payload);
+      // console.log('jsonObj:' + JSON.stringify(jsonObj));
       let prefferrdPharmacyData = jsonObj.pharmaciesList;
-      this.pharmaname = prefferrdPharmacyData;
+      this.pharmaname = prefferrdPharmacyData;      
     })
+  }
+
+  getPharmabyId(event){
+    this.pharmaid = event.target.value;    
+    console.log("pid:" + this.pharmaid);
   }
 
 
@@ -332,6 +372,7 @@ export class ApiService {
     })
   }
 
+  
   //Create Invoice
 
   searchcreate(event) {
@@ -354,9 +395,149 @@ export class ApiService {
 
   createInvoice(selecteddrug){
     this.selecteddrug = selecteddrug;
-    console.log("selected" +  selecteddrug);
+    let deviceId = localStorage.getItem('deviceId');
+    let url = this.serviceUrl + '/suppliers/tci/bill?tradeid=' + selecteddrug +'&null&_=' + deviceId
+    return this.httpClient.get(url).subscribe((data:any)=>{
+      let jsonObj = JSON.parse(data.payload);
+      let supplierStock = jsonObj.supplierStocksBO;
+      console.log("DrugDetails:" + JSON.stringify(supplierStock));
+      this.supplierStocks = supplierStock;
+      
+      let expdate = supplierStock.expiryDate;
+      this.exp = expdate;
+      console.log("expdate:" + expdate);
+
+     
+      
+      for(let i=0;i<supplierStock.length;i++){
+        this.gstamt ={
+         taxOnWhat : supplierStock[i].taxOnWhat,
+         MRP : supplierStock[i].stockUnitMaximumRetailPrice,
+         salerate : supplierStock[i].stockUnitSalesPrice,
+         totalquan : supplierStock[i].quantityOrdered,
+         schemedisc : supplierStock[i].stockUnitSchemeDiscountPercentage,
+      }
+       this.sgst = {
+
+        sgstPercentage : supplierStock[i].sgstPercentage,
+        cgstPercentage : supplierStock[i].cgstPercentage,
+
+      }
+
+     
+        this.gstper = parseFloat(supplierStock[i].sgstPercentage) + parseFloat(supplierStock[i].sgstPercentage)
+      
+
+      this.igst = {
+        cgstPercentage : 0,
+        igstPercentage : parseFloat(supplierStock[i].cgstPercentage) + parseFloat(supplierStock[i].sgstPercentage),
+      }
+
+      
+      
+      //   if(this.gsttype == 'sgst'){  
+      //   this.sgstpercent = sgst;
+      //   this.cgstpercent = cgst;
+        
+      //   }
+      //  else if(this.gsttype == 'igst'){
+      //   this.cgstpercent = 0.00;
+      //   this.igstpercent = parseFloat(cgst) + parseFloat(sgst);
+      // }
+      this.gstamtArray.push(this.gstamt);
+      this.respArray.push(this.sgst);
+      this.igstArray.push(this.igst);
+      this.gstperArray.push(this.gstper)
+      console.log("gst:" +JSON.stringify(this.respArray));
+      }
+      
+      
+
+
+    })
+    
   }
- 
+  quantitys(event){
+    this.quantity = event.target.value;
+    console.log("quantity:" + this.quantity);
+    
+  }
+  salerate(event){
+    this.salerates = event.target.value;
+    console.log("salesrate:" + this.salerates);
+  }
+  saveCI(){
+    let totalAmt = parseFloat(this.gstper);
+      // ((this.respArray.gstper / 100) * ((this.salerates * this.quantity) - this.gstamtArray.schemedisc) * ((100 - this.gstamt.schemedisc) / 100))
+      console.log('totalamt:' + JSON.stringify(totalAmt));
+
+    }
+  
+  total(){
+    this.totalamt = parseFloat(this.quantity) * parseFloat(this.salerates);
+    console.log("total:" + this.totalamt);
+  }
+
+  caculateinvoice(){
+    if(this.gstamt.taxOnWhat == "ME"){
+      this.gstMRP = (this.gstamt.MRP - ((this.igstArray.gstper/(100+this.igstArray.gstper))*this.gstamt.MRP));
+      console.log('gstMRP:' + this.gstamt);
+    }
+  }
+
+  getGstType(){
+    let pharmaid =  this.pharmaid 
+    let deviceId = sessionStorage.getItem('deviceId')
+    let url = this.serviceUrl + "/suppliers/pharmacy/findgsttype?pharmacyId=" + pharmaid + "&null&_=" + deviceId;
+    return this.httpClient.get(url).subscribe((data:any)=>{
+      let jsonObj = JSON.parse(data.payload);
+      let gsttype = jsonObj.addlGstType;
+      this.gsttype = gsttype;
+      console.log("gsttype:" + gsttype);
+    })
+
+  }
+
+  getDetailByBatch(){
+    let selecteddrug = this.selecteddrug;
+    console.log("selected:" + selecteddrug);
+  }
+
+  //PURCHASE INWARD
+
+  
+
+  searchcacf(event) {
+    let text =this.text;
+    console.log("text:" + text);
+    let deviceId = sessionStorage.getItem('deviceId');
+    let url = this.serviceUrl + "/ops/cacf/list?startPageNum=0&pageSize=25&cacfagentname="+event.query+"&null&_="+deviceId;
+    this.httpClient.get(url).subscribe((data:any) => {
+        let jsonObj = JSON.parse(data.payload);
+        console.log("result:" + JSON.stringify(data));
+        let tcilist = jsonObj.caCfAgentsBOList;
+        this.cacf = tcilist;
+        console.log("cacf:" + tcilist)
+        
+          });
+}
+
+  postStocks(){
+    let supplierStocksBO ={
+      supplierStocksBO:[{
+        tradeCompositeId:this.drugname,
+        batchNumber:this.batchno,
+        suppliedWhen:this.taxmodal,
+        manufacturerMnemonic:"-",
+
+     
+      }]
+    }    
+
+    console.log('postStocks:' + JSON.stringify(supplierStocksBO));
+
+
+} 
 
   logout() {
     return new Promise((resolve, reject) => {
