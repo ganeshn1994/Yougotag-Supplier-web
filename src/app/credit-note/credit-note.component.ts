@@ -17,8 +17,7 @@ export class CreditNoteComponent implements OnInit {
   constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService,private cookieService: CookieService) { 
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     this.apiservice.getDefaultDate();
-
-  }
+   }
 
   ngOnInit() {
   }
