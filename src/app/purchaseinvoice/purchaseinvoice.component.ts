@@ -47,4 +47,7 @@ export class PurchaseinvoiceComponent implements OnInit {
   onSubmit(){
   console.log("suppliedquality:"+ this.suppliedqty);
   }
+  searchcacf(event){
+    this.apiservice.searchcacf(event);
+  }
 }
