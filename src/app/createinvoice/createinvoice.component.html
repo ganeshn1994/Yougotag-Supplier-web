@@ -1,22 +1,19 @@
 <app-navbar></app-navbar>
 <div style="margin-top: 40px; margin-left: 20px; font-weight: bold !important; font-style: italic !important" class="ng-binding">Transactions &gt;&gt; Create Sales Invoice</div>
 <div class="col-sm-4">
-  <select id="pharmacyInDynamicInvoice" name="pharmacyInInvoice" (change)="selectChangeHandler($event)">
+  <select id="pharmacyInDynamicInvoice" name="pharmacyInInvoice" (change)="selectchange($event)">
     <option>--Select Pharmacy--</option>
-    <option *ngFor="let names of apiservice.pharmaname" value={{names}}>
-        {{names.pharmacyName}}
+    <option *ngFor="let names of apiservice.pharmaname" value={{names.pharmacyId}}>
+        {{names.pharmacyName}},{{names.taxpayerIdentificationNumber}}
     </option>
   </select>
 </div>
 <div class="col-sm-4" style="margin-top: 6px;">
-  <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" (onClear)="search($event)">
+  <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)" >
   </p-autoComplete>
-  <div *ngIf="text!=''">
-  <ul class="drugname">
-      <li *ngFor="let drug of apiservice.results;let i=index"><span class="badge badge-pill badge-primary" (click)="createInvoice(drug.tradeCompositeId)"  data-toggle="modal" data-target="#myModal" >{{drug.tradeCompositeId}}</span></li>
+  <ul  class="drugname">
+      <li *ngFor="let drug of apiservice.results;let i=index"><span class="badge badge-pill badge-primary"  (click)="createInvoice(drug.tradeCompositeId,drug.batchNumber,drug.expiryDate)"  data-toggle="modal" data-target="#myModal" >{{drug.tradeCompositeId}},{{drug.batchNumber}},{{drug.expiryDate}}</span></li>
     </ul>
-    </div>
-    <div *ngIf="text===''"></div>
 </div>
 
 <div class="col-md-12">
@@ -47,31 +44,74 @@
               </thead>
               <tbody>
               <!-- ngIf: janitramListArr.length ==0 -->
-                <!-- ngRepeat: janitramDataObj in janitramListData track by $index -->
-                <th style="text-align: -webkit-right;" class="ng-binding">1</th>
-                        <td  class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
-                        <td class="ng-binding"></td>
+              <tr *ngFor="let invoice of apiservice.supplierStocks;let i=index">
+                        <th style="text-align: -webkit-right;" class="ng-binding">{{1}}</th>
+                        <th  class="ng-binding">{{invoice.tradeCompositeId}}</th>
+                        <th class="ng-binding">{{quantity}}</th>
+                        <th class="ng-binding">{{invoice.free}}</th>
+                        <th class="ng-binding">{{invoice.stockUnitSalesPrice}}</th>
+                        <th class="ng-binding">{{invoice.batchNumber}}</th>
+                        <th class="ng-binding">{{invoice.stockUnitMaximumRetailPrice}}</th>
+                        <div class="col-sm-2" *ngIf = "apiservice.gsttype == 'sgst' || apiservice.gsttype == 'null' " >
+                        <th class="ng-binding" *ngFor="let supplier of apiservice.respArray">CGST% = {{supplier.cgstPercentage}}<br>
+                        Addl.gst%({{apiservice.gsttype}}) = {{supplier.cgstPercentage}}
+                        </th>
+                      </div>
+                      <div class="col-sm-2" *ngIf = "apiservice.gsttype == 'igst'" >
+                      <th class="ng-binding" *ngFor="let supplier of apiservice.igstArray">CGST% = 0<br>
+                      Addl.gst%({{apiservice.gsttype}})={{supplier.addlPercentage}}
+                      </th>
+                    </div>
+                        <th class="ng-binding" *ngIf="invoice.taxOnWhat=='MI'">MRP + Free</th>
+                        <th class="ng-binding" *ngIf="invoice.taxOnWhat=='ME'">MRP - Free</th>
+                        <th class="ng-binding" *ngIf="invoice.taxOnWhat=='SI'">Sale Rate + Free</th>
+                        <th class="ng-binding" *ngIf="invoice.taxOnWhat=='SE'">Sale Rate - Free</th>
+                        <th class="ng-binding">{{invoice.manufacturerMnemonic}}</th>
+                        <th class="ng-binding">{{invoice.baseUnitSchemeDiscountPercentage}}</th>
+                        <th class="ng-binding">{{invoice.stockUnitSchemeDiscountAmount}}</th>
+                        <th class="ng-binding" *ngFor="let total of apiservice.totalamtArray">{{total.totalamt}}</th>
+
+                        
+                        <td style="text-align: center;">
+                          <a data-toggle="modal" data-ng-click="updateDynamicInvoiceDrugDetails($index, dynamicInvoiceDrugListObj)" data-target="#dynamicInvoice" id="">
+                            <abbr title="Edit" class="egp-border-bottom">
+                              <i class="fa fa-pencil-square-o egp-font24"></i>
+                            </abbr>
+                          </a>
+                        </td>                       
+                        <th style="text-align: center;">
+                          <a data-ng-click="deleteDynamicInvoiceDrugDetails(dynamicInvoiceDrugListObj, $index)">
+                          <abbr title="Delete" class="egp-border-bottom">
+                            <i class="fa fa-trash egp-font24"></i>
+                          </abbr>
+                        </a>
+                      </th>
 
 
                         <!-- <td data-ng-if="purchaseOrderObj.poStatus=='A'" class="ng-scope">Approved</td>  -->
                         <!-- <td style="text-align: center;"><a data-ng-click="viewInvoice(invoiceDataObj)" id="2610"><abbr title="View Invoice" class="egp-border-bottom"><i class="fa fa-share egp-font24"></i></abbr></a></td> -->
-                      
+                      </tr>
               </tbody>
             </table>
           </div>
       </div>
+      <div style="display: inline; text-align: right;">
+          <div class="egp-total-label ng-binding" >
+            <span style="color: black; font-weight: 500 !important;">Gross Amount:</span>{{apiservice.gstMRP}}
+          </div>
+          <div class="egp-total-label ng-binding">
+            <span style="color: black; font-weight: 500 !important;">Total GST Amount:</span> 18.72
+          </div>
+          <div class="egp-total-label ng-binding">
+            <span style="color: black; font-weight: 500 !important;">Total Amount:</span> 174.72
+          </div>
+          <div class="egp-total-label ng-binding">
+            <span style="color: black; font-weight: 500 !important;">Total Credit Amount:</span> 0.00
+          </div>
+          <div class="egp-total-label ng-binding">
+            <span style="color: black; font-weight: 500 !important;">Grand Total:</span> 174.72
+          </div>
+        </div>
     </div>
   </div>
   <!-- Modal -->
@@ -87,15 +127,15 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-sm-6">
-            <label style="color: black; font-size: 11; font-weight: 300 !important;">Drug
-              Name</label><br> <label style="color: #716e6e;" class="ng-binding">TEST DRUG 1, Batch=TESTBTH, ExpDt=2018-10-31) </label>
-              <!-- <label><br>HSN:{{hsnCode}}</label>
-            <small style="color: #716e6e;" ng-if="{{manufacturerMnemonic}}">Mfg/Mkt: {{manufacturerMnemonic}}</small> -->
+            <label style="color: black; font-size: 13;"><b>Drug Name</b></label><br> 
+            <label *ngFor = "let batch of apiservice.supplierStocks" style="color: #716e6e;" class="ng-binding">DrugName={{batch.tradeCompositeId}},Batch={{batch.batchNumber}},ExpDt={{batch.expiryDate}} </label>
           </div>
           <div class="col-sm-6">
-          <label style="color: black; font-size: 13; font-weight: 500 !important;">Batch Number</label>
+          <label style="color: black; font-size: 13;"><b>Batch Number</b></label>
             <div data-ng-show="batchReadonly === 'false'" aria-hidden="false" class="">
-              <select id="batch" data-ng-model="batchnumber" data-ng-options="batch as batch for batch in stockListData" data-ng-change="getDrugeDetailAsPerBatch(batchnumber)" data-ng-init="batchnumber ===''" required="" class="ng-pristine ng-untouched ng-invalid ng-invalid-required" aria-invalid="true"><option value="" disabled="" selected="" class="">--Select Batch--</option><option value="0" label="TESTBTH">TESTBTH</option></select>
+              <select id="batch" (change)="getGstType()">
+                <option value="" disabled="" selected="" class="">--Select Batch--</option>
+                <option *ngFor = "let batch of apiservice.supplierStocks" value="{{batch.batchNumber}}" label="TESTBTH">{{batch.batchNumber}}</option></select>
             </div>
             <div data-ng-show="batchReadonly === 'true'" aria-hidden="true" class="ng-hide">
               <label data-ng-model="batchnumber" class="ng-pristine ng-untouched ng-valid ng-binding" aria-invalid="false"></label>
@@ -103,75 +143,74 @@
           </div>
         </div>
         <div class="row">
+          <div *ngFor="let supplier of apiservice.supplierStocks" class="col-sm-2">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;"><b>Expiry</b></label><br>
+
+            <label>{{supplier.expiryDate}}</label>
+          </div>
+
           <div class="col-sm-2">
-            <label style="color: black; font-size: 13; font-weight: 500 !important;">Expiry</label><br>
-            <!-- ngIf: showlabel === 'true' -->
+            <label style="color: black; font-size: 13; font-weight: 500 !important;"><b>MRP</b></label><br>
+            <label *ngFor="let supplier of apiservice.supplierStocks">{{supplier.baseUnitMaximumRetailPrice}}</label>
           </div>
-          <div class="col-sm-2">
-            <label style="color: black; font-size: 13; font-weight: 500 !important;">MRP</label><br>
-            <!-- ngIf: showlabel === 'true' -->
+          
+          <div class="col-sm-2" *ngIf = "apiservice.gsttype == 'sgst' || apiservice.gsttype == 'null' " >
+            <label style="color: black; font-size: 13; font-weight: 500 !important;"><b>CGST%</b></label><br>
+            <label *ngFor= "let supplier of apiservice.respArray">{{supplier.cgstPercentage}}</label>
           </div>
-          <div class="col-sm-2">
-            <label style="color: black; font-size: 13; font-weight: 500 !important;">CGST%</label><br>
-            <!-- ngIf: showlabel === 'true' -->
+          <div class="col-sm-2" *ngIf = "apiservice.gsttype == 'igst'">
+              <label style="color: black; font-size: 13; font-weight: 500 !important;"><b>CGST%</b></label><br>
+              <label>0</label>
           </div>
-          <div class="col-sm-2" ng-switch="" on="addlGstType">
-            <!-- ngSwitchWhen: sgst -->
-            <!-- ngSwitchWhen: igst -->
-            <!-- ngSwitchDefault:  --><div ng-switch-default="" class="ng-scope">
-            <label style="color: black; font-size: 13; font-weight: 500 !important;" class="ng-binding">Addl. GST</label></div><!-- end ngSwitchWhen: -->
-            <!-- ngIf: showlabel === 'true' -->
-              <input style="width: 90%; height: 40px;" data-ng-model="addlgsttype" id="addlgsttype" hidden="true" class="ng-pristine ng-untouched ng-valid" aria-invalid="false">
-          </div>
-          <div class="col-sm-2">
-            <label style="color: black; font-size: 13; font-weight: 500 !important;">Qty Available</label><br> 
-              <!-- ngIf: showlabel === 'true' -->
-          </div>
+                  
+          <div class="col-sm-2" >
+            <label *ngIf="apiservice.gsttype == null" style="color: black; font-size: 13; font-weight: 500 !important;" class="ng-binding"><b>Addl. GST</b></label>
+            <label *ngIf="apiservice.gsttype == 'sgst'" style="color: black; font-size: 13; font-weight: 500 !important;"><b>SGST%</b></label>
+            <label *ngIf="apiservice.gsttype == 'igst'" style="color: black; font-size: 13; font-weight: 500 !important;"><b>IGST%</b></label><br>
+            <div *ngIf="apiservice.gsttype == 'sgst'">
+            <label  *ngFor="let supplier of apiservice.respArray">{{supplier.sgstPercentage}}</label>
+            </div>
+            <div *ngIf="apiservice.gsttype == 'igst'">
+              <label *ngFor="let supplier of apiservice.igstArray" value="" >{{supplier.igstPercentage}}</label>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText> 
-              <label for="float-input">Qty to be Supplied(Strip)</label>
-          </span>
-          </div>
-          <div class="col-md-6">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText> 
-              <label for="float-input">Free Qty(Strip)</label>
-          </span>
+          <div class="col-sm-4">
+            <label style="color: black; font-size: 13; font-weight: 500 !important;"><b>Qty Available></b></label><br> 
+              <label *ngFor="let supplier of apiservice.supplierStocks" >{{supplier.expiryDate}}</label>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 space">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText> 
-              <label for="float-input">Disc%</label>
-          </span>
+              <label><b>Qty to be Supplied(Strip)</b></label>
+              <input id="float-input" type="text"  (keyup)="quantitys($event)" size="30" pInputText> 
           </div>
           <div class="col-md-6 space">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText> 
-              <label for="float-input">Sale Rate</label>
-          </span>
+              <label><b>Free Qty(Strip)</b></label>
+              <input id="float-input" value="0" type="text" size="30" pInputText> 
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 space">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText> 
-              <label for="float-input">Scheme Amount</label>
-          </span>
+              <label><b>Disc%</b></label>
+              <input id="float-input" value="0.0" type="text" size="30" pInputText> 
           </div>
-          <div class="col-md-6 space">
-            <span class="ui-float-label">
-              <label for="float-input">Tax On</label>
-          </span>
+          <div class="col-md-6 space" *ngFor="let supplier of apiservice.supplierStocks">
+              <label><b>Sale Rate</b></label>
+              <input value="{{supplier.stockUnitSalesPrice}}" (keyup)="salerate($event)" id="float-input" type="text" placeholder="0" size="30" pInputText> 
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 space">
-            <label for="float-input">Total Amount:</label>
+              <label><b>Scheme Amount</b></label>
+              <input  id="float-input" type="text" value="0.0" placeholder="0" size="30" pInputText> 
+          </div>
+          <div class="col-md-6 space" *ngFor="let supplier of apiservice.supplierStocks">
+              <label for="float-input"><b>Tax On</b></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 space">
+            <label for="float-input"><b>Total Amount:{{apiservice.totalamt}}</b></label>
           </div>
         </div>
         <div class="row">
@@ -183,9 +222,8 @@
       <div class="modal-footer">
           <p-button icon="fa fa-check" label="Scheme"></p-button>&nbsp;
           <p-button icon="fa fa-clear" label="Clear"></p-button>&nbsp;
-          <p-button icon="fa fa-save" data-dismiss="modal" label="Save"></p-button>
+          <p-button icon="fa fa-save" data-dismiss="modal" (click) = "saveCI()" label="Save"></p-button>
       </div>
     </div>
-
-  </div>
+</div>
 </div>

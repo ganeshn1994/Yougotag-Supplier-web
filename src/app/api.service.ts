@@ -98,6 +98,7 @@ export class ApiService {
   drugname: any;
   batchno: any;
   taxmodal: any;
+  cacfname: any;
 
   
 
@@ -533,7 +534,13 @@ export class ApiService {
 
   //PURCHASE INWARD
 
-  
+  selectcacfinward(selectcacf,selectcacfname){
+    this.selectcacf = selectcacf;
+    this.cacfname = selectcacfname;
+    console.log("selectcacf:" + selectcacf);
+    console.log("selectcacfname:" + selectcacfname);
+
+  }
 
   searchcacf(event) {
     let text =this.text;

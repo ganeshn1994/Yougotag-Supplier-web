@@ -23,10 +23,10 @@
       <!-- ngIf: suppliedValidation.length>0 -->
     </div>
     <div class="col-sm-4" style="margin-top: 6px;">
-      <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="searchcacf($event)" >
+      <p-autoComplete [(ngModel)]="caCfname" [suggestions]="apiservice.cacfname" (completeMethod)="searchcacf($event)" >
       </p-autoComplete>
       <ul  class="drugname">
-          <li *ngFor="let drug of apiservice.cacf;let i=index"><span class="badge badge-pill badge-primary"  (click)="createInvoice(drug.tradeCompositeId,drug.batchNumber,drug.expiryDate)"  data-toggle="modal" data-target="#myModal" >{{drug.caCfName}}</span></li>
+          <li *ngFor="let drug of apiservice.cacf;let i=index"><span class="badge badge-pill badge-primary"  (click)="selectcacf(drug.caCfId,drug.caCfName)"  >{{drug.caCfName}}</span></li>
         </ul>
     </div>
   </div>
@@ -120,7 +120,7 @@
         </table>
         <div class="pull-right" style="padding-bottom: 10px">
           <button type="button" class="btn btn-danger" ng-click="clearDrugList()">Clear</button>
-          <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+          <button type="button" (click)="saveDrug()" class="btn btn-primary">Save</button>
         </div>
       </div>
 
