@@ -480,7 +480,10 @@ export class ApiService {
     
   }
  
+<<<<<<< HEAD
 
+=======
+>>>>>>> Search CA/CF API implementation
   quantitys(event){
     this.quantity = event.target.value;
     console.log("quantity:" + this.quantity);
