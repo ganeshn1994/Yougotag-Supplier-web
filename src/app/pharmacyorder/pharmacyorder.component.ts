@@ -4,6 +4,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { pipeDef } from '../../../node_modules/@angular/core/src/view';
 import {Router} from '@angular/router';
 import { HttpHeaders,HttpClient } from '@angular/common/http';
+import {BsDatepickerConfig} from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-pharmacyorder',
@@ -14,9 +15,10 @@ export class PharmacyorderComponent implements OnInit {
 
   selectedDay: any = [];
   status:any = '';
-
+  datePickerConfig: Partial<BsDatepickerConfig>;
   
   constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService) { 
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     this.apiservice.getDefaultDate();
 
   }

@@ -52,9 +52,6 @@ export class PurchaseinvoiceComponent implements OnInit {
   shelf: any;
   selectedcacfid: any;
 
-
-
- 
   constructor(private httpClient:HttpClient,private router:Router,private apiservice:ApiService,private cookieService: CookieService) { 
     this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     this.minDateConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD',minDate:new Date()});
@@ -73,8 +70,7 @@ export class PurchaseinvoiceComponent implements OnInit {
 
     }
   }
-  HEAD
-  
+
   selectcacf(selectedcacf,selectcacfname){
     this.apiservice.selectcacfinward(selectedcacf,selectcacfname);
     this.selectedcacfid =this.apiservice.selectcacf

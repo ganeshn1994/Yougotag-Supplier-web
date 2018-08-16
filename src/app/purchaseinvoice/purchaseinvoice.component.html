@@ -23,7 +23,7 @@
       <!-- ngIf: suppliedValidation.length>0 -->
     </div>
     <div class="col-sm-4" style="margin-top: 6px;">
-      <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="searchcacf($event)" (onClear)="searchcacf($event)">
+      <p-autoComplete [(ngModel)]="text" [suggestions]="results" (completeMethod)="searchcacf($event)" (onClear)="searchcacf($event)" placeholder="Search">
       </p-autoComplete>
       <div *ngIf="text!=''">
         <ul  class="drugname">

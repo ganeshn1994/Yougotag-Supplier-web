@@ -17,11 +17,15 @@ import { environment } from '../config';
 export class HomeComponent implements OnInit {
   
  
-
+  datePickerConfig: Partial<BsDatepickerConfig>;
   baseUrl = environment.baseUrl;
   serviceUrl = environment.serviceUrl;
+  status:any='';
+  paymentStatus:any='';
+
   
   constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService,private cookieService: CookieService) { 
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     this.apiservice.getDefaultDate();
 
   }
@@ -34,7 +38,7 @@ export class HomeComponent implements OnInit {
 
   selectChangeHandler(event: any) {
     //update the ui
- this.apiservice.selectChangeHandler(event);
+    this.apiservice.selectChangeHandler(event);
   }
 
   selectStatus(event: any) {
@@ -58,8 +62,8 @@ export class HomeComponent implements OnInit {
      this.apiservice.getInvoice();
    }
     search() {
-  this.apiservice.search();
-}
+   this.apiservice.search();
+  }
    getInvoiceId(invoicenum){
      this.apiservice.getInvoiceId(invoicenum);
      this.getDetailsid()

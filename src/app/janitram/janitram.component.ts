@@ -11,8 +11,9 @@ import { HttpHeaders,HttpClient } from '@angular/common/http';
   styleUrls: ['./janitram.component.css']
 })
 export class JanitramComponent implements OnInit {
-  
+  datePickerConfig: Partial<BsDatepickerConfig>;
   constructor(private router:Router,private httpClient:HttpClient,private apiservice:ApiService,private cookieService: CookieService) { 
+    this.datePickerConfig = Object.assign({},{containerClass:'theme-dark-blue',showWeekNumbers:false,dateInputFormat:'YYYY/MM/DD'});
     this.apiservice.getDefaultDate();
 
   }

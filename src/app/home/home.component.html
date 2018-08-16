@@ -13,13 +13,13 @@
       </div>
       <div class="col-sm-2">
         <div class="form-group">
-          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" placeholder="{{apiservice.startdate}}">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="startdate" id="startDateInInvoice" type="text" value="{{apiservice.startdate}}">
           <i class="fa fa-calendar egp-font20"></i>
         </div>
     </div>
     <div class="col-sm-2">
         <div class="form-group">
-          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" placeholder="{{apiservice.enddate}}">
+          <input bsDatepicker [bsConfig]="datePickerConfig" class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="enddate" id="endDateInInvoice" type="text" value="{{apiservice.enddate}}">
           <i class="fa fa-calendar egp-font20"></i>
         </div>
         <!-- ngIf: dateValidationForInvoiceFlag === 'true' -->
